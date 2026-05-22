@@ -340,24 +340,19 @@ ul {
     text-align: center;
 }
 
+/* Section titles — softer treatment shared across the whole page:
+   lighter weight (500), airier letter-spacing (+0.01em), tighter
+   word-spacing (-0.08em) so the phrase reads dense, and a relaxed
+   line-height for breathing room. `text-wrap: balance` keeps lines
+   visually even at any width. */
 .section-title {
-    font-size: clamp(36px, 5vw, 70px);
-    font-weight: 600;
-    line-height: 1.05;
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-}
-
-/* About section title — matches the .negative chip type styling:
-   lighter weight (500 instead of 600) + airier letter-spacing
-   (0.01em instead of the tight -0.02em default). Line-height
-   relaxed for breathing room between rows, and word-spacing
-   tightened so the title reads as a denser phrase. */
-.about-section .section-title {
-    line-height: 1.20;
+    font-size: clamp(32px, 4vw, 52px);
     font-weight: 500;
+    line-height: 1.20;
+    margin-bottom: 24px;
     letter-spacing: 0.01em;
     word-spacing: -0.08em;
+    text-wrap: balance;
 }
 
 .section-title-center {
@@ -716,7 +711,7 @@ ul {
    in the same muted white as the description above. */
 .hero-meta-line {
     margin: 0 0 30px;
-    color: var(--color-muted);
+    color: #FFFFFF;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -746,28 +741,113 @@ ul {
 
 .hero-visual {
     position: relative;
-    perspective: 1200px; /* depth for the 3D tilt on banner */
+    perspective: 1200px;
 }
 
-.hero-banner {
+/* 3D house illustration with a slow float + subtle tilt loop, sat over
+   a pulsing brand-green radial glow. Replaces the old banner image. */
+.hero-3d {
+    position: relative;
     width: 100%;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5),
-                0 0 0 1px var(--color-border),
-                0 0 80px rgba(3, 215, 119, 0.25);
-    transform-style: preserve-3d;
-    transform: rotateX(0) rotateY(0) translateZ(0);
-    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1),
-                box-shadow 0.5s ease;
+    max-width: 540px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-3d-glow {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 4%;
+    bottom: -14%;
+    background: radial-gradient(closest-side,
+        rgba(0, 0, 0, 0.95),
+        rgba(0, 0, 0, 0.55) 35%,
+        rgba(0, 0, 0, 0.18) 65%,
+        rgba(0, 0, 0, 0) 80%);
+    filter: blur(56px);
+    z-index: 0;
+    pointer-events: none;
+    animation: hero-3d-glow-pulse 2.6s ease-in-out infinite alternate;
+    will-change: opacity, transform;
+}
+
+/* The scene = floating composition (house + all people). Drop-shadow and
+   float animation live here so everything moves together as one unit. */
+.hero-3d-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    animation: hero-3d-float 2.6s ease-in-out infinite alternate;
+    filter: drop-shadow(0 35px 45px rgba(0, 0, 0, 0.55));
     will-change: transform;
+    z-index: 1;
+}
+
+.hero-3d-house {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* People pop in one by one after page load, staggered. Positioned as a
+   percentage of the scene so they scale with the house. Each instance
+   sets its own top/left/width + animation-delay below. */
+.hero-3d-person {
+    position: absolute;
+    object-fit: contain;
+    opacity: 0;
+    transform: translateY(18px) scale(0.82);
+    animation: hero-3d-person-in 0.9s cubic-bezier(0.3, 1.5, 0.5, 1) forwards;
+    will-change: opacity, transform;
+}
+
+/* Per-person positions — left/top/width as % of the .hero-3d-scene box.
+   Matched to where each figure sits in the source render. */
+.hero-3d-person-1 { left: 75%; bottom: 19%; width: 13%; animation-delay: 0.3s; }
+.hero-3d-person-2 { left: 82%; bottom: 19%; width: 13%; animation-delay: 0.6s; }
+.hero-3d-person-3 { left: 32%; top: 67%;    width: 13%; animation-delay: 0.9s; }
+.hero-3d-person-4 { left: 20%; bottom: 18%; width: 13%; animation-delay: 1.2s; }
+.hero-3d-person-5 { left: 43%; bottom: 43%; width: 12%; animation-delay: 1.5s; }
+.hero-3d-person-6 { left: 50%; top: 42%;    width: 15%; animation-delay: 1.8s; }
+
+@keyframes hero-3d-float {
+    0%   { transform: translateY(-10px) rotate(-2deg); }
+    100% { transform: translateY(10px)  rotate(2deg);  }
+}
+
+@keyframes hero-3d-glow-pulse {
+    0%   { opacity: 0.45; transform: scale(0.85); }
+    100% { opacity: 1;    transform: scale(1.18); }
+}
+
+@keyframes hero-3d-person-in {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @media (hover: hover) {
-    .hero-visual:hover .hero-banner {
-        transform: rotateX(4deg) rotateY(-6deg) translateZ(20px) scale(1.02);
-        box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6),
-                    0 0 0 1px var(--color-border-strong),
-                    0 0 120px rgba(3, 215, 119, 0.40);
+    .hero-3d:hover .hero-3d-glow {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-3d-scene,
+    .hero-3d-glow {
+        animation: none;
+    }
+    .hero-3d-person {
+        opacity: 1;
+        transform: none;
+        animation: none;
     }
 }
 
@@ -1134,7 +1214,7 @@ ul {
 /* About section — everything center-aligned (text + flex children) */
 .about-intro {
     margin: 0 auto;
-    max-width: 780px;
+    max-width: 880px;
     text-align: center;
 }
 
@@ -1376,6 +1456,12 @@ ul {
     flex: 1;
     padding-top: 6px;
     min-width: 0;
+    opacity: 0.25;
+    transition: opacity 0.4s ease;
+}
+
+.timeline-item.is-active .timeline-body {
+    opacity: 1;
 }
 
 .timeline-body-title {
@@ -2007,6 +2093,35 @@ ul {
                 box-shadow 0.35s ease;
 }
 
+/* "Recommended" diagonal ribbon — pinned to the top-right corner of the
+   featured Full Pass card. The card is clipped to its border-radius so
+   the ribbon's overflow is sliced cleanly along the rounded corner. */
+.ticket-card-feature {
+    overflow: hidden;
+}
+
+.ticket-ribbon {
+    position: absolute;
+    top: 28px;
+    right: -37px;
+    width: 150px;
+    padding: 3px 0;
+    background: var(--color-primary);
+    color: #000000;
+    font-family: inherit;
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-align: center;
+    transform: rotate(45deg);
+    transform-origin: center center;
+    box-shadow: 0 6px 16px rgba(3, 215, 119, 0.35);
+    pointer-events: none;
+    z-index: 2;
+}
+
 /* Featured "Full Pass" styling — applied PERMANENTLY only on touch
    devices (where hover doesn't exist as a discovery mechanism).
    On desktop, .ticket-card-feature looks identical to other cards
@@ -2264,6 +2379,122 @@ ul {
     color: var(--color-dim);
     font-size: 13px;
     font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.footer-copy { margin: 0; }
+
+/* "Website by Zup!" credit — liquid-glass pill that expands on hover to
+   reveal the email. Click anywhere on the chip opens a mailto. */
+.zup-credit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    color: var(--color-text);
+    perspective: 400px;
+    font-weight: 500;
+    font-size: 12.5px;
+    letter-spacing: 0.2px;
+    text-decoration: none;
+    position: relative;
+    isolation: isolate;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.22) 0%,
+            rgba(255, 255, 255, 0.06) 30%,
+            rgba(255, 255, 255, 0.04) 70%,
+            rgba(255, 255, 255, 0.20) 100%);
+    backdrop-filter: url(#liquid-glass) blur(14px) saturate(180%) brightness(1.10);
+    -webkit-backdrop-filter: blur(14px) saturate(180%) brightness(1.10);
+    box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.40),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 8px 24px rgba(0, 0, 0, 0.28);
+    transition: box-shadow 0.4s ease, color 0.4s ease;
+}
+
+/* Zup bolt mark — PNG icon forced to white (same trick used for the
+   Bolt logo elsewhere on the site). Flips 3D around the Y axis on a
+   continuous loop — coin-spin effect (perspective on the parent gives
+   the depth). */
+.zup-credit-mark {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    flex-shrink: 0;
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    animation: zup-bolt-spin 3.2s linear infinite;
+    will-change: transform;
+}
+
+@keyframes zup-bolt-spin {
+    from { transform: rotateY(0deg); }
+    to   { transform: rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .zup-credit-mark { animation: none; }
+}
+
+.zup-credit-label {
+    white-space: nowrap;
+}
+
+/* The email starts collapsed (max-width 0) and slides open on hover. */
+.zup-credit-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--color-primary);
+    transition: max-width 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
+                opacity 0.3s ease 0.05s;
+}
+
+.zup-credit-arrow {
+    display: inline-block;
+    transform: translateX(-4px);
+    transition: transform 0.4s ease;
+}
+
+.zup-credit:hover {
+    color: #FFFFFF;
+    box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+        inset 0 0 0 1px rgba(3, 215, 119, 0.40),
+        0 8px 24px rgba(0, 0, 0, 0.28),
+        0 0 32px rgba(3, 215, 119, 0.35);
+}
+
+.zup-credit:hover .zup-credit-email {
+    max-width: 220px;
+    opacity: 1;
+}
+
+.zup-credit:hover .zup-credit-arrow {
+    transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .zup-credit-email,
+    .zup-credit-arrow,
+    .zup-credit { transition: none; }
 }
 
 /* =========================================================
@@ -2495,7 +2726,7 @@ ul {
     }
 
     /* ----- Section typography ----- */
-    .section-title { font-size: clamp(30px, 7.5vw, 44px); line-height: 1.08; }
+    .section-title { font-size: clamp(22px, 6vw, 32px); line-height: 1.25; }
     .section-lead { font-size: 16px; }
     .eyebrow { font-size: 12px; letter-spacing: 1.6px; }
 
@@ -2604,14 +2835,6 @@ ul {
     .about-quote { font-size: 16px; padding-left: 14px; }
     .negative { font-size: 13px; padding: 7px 14px; }
 
-    /* About title on mobile — keep it short and tight (target ~2 lines).
-       Smaller font + text-wrap: balance lets the browser distribute the
-       text evenly across rows instead of producing 4 ragged lines. */
-    .about-section .section-title {
-        font-size: clamp(22px, 6vw, 32px);
-        line-height: 1.25;
-        text-wrap: balance;
-    }
 
     /* About negatives on mobile: first chip alone on row 1 (centered),
        chips 2 + 3 share row 2 side-by-side. Grid handles the layout

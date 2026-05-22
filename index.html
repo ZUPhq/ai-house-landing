@@ -72,7 +72,7 @@
     ============================================= -->
     <header class="site-header" id="site-header">
         <div class="container nav-container">
-            <a href="#hero" class="brand" aria-label="promocrat — home">
+            <a href="https://promocrat.com" target="_blank" rel="noopener noreferrer" class="brand" aria-label="promocrat — home">
                 <img src="assets/logo-promocrat-white.svg" alt="promocrat" class="brand-logo">
             </a>
 
@@ -170,7 +170,22 @@
             </div>
 
             <div class="hero-visual">
-                <img src="assets/ai-house-banner.jpg" alt="AI House — an exclusive weekend for top-tier AI builders. June 19-20, Private Villa, Otopeni. Workshops, networking, think tanks. Powered by Instantly, supported by ElevenLabs, promocrat, Bolt." class="hero-banner" fetchpriority="high" decoding="async">
+                <div class="hero-3d">
+                    <div class="hero-3d-glow" aria-hidden="true"></div>
+                    <!-- The "scene" is the layer that floats. House + people share
+                         this transform so they move as one composition. Each person
+                         is absolutely positioned over the house and pops in with a
+                         staggered delay after the house is on screen. -->
+                    <div class="hero-3d-scene">
+                        <img src="assets/casa%20fara%20omuleti.png" alt="AI House — 3D illustration of the A-frame venue where AI builders gather." class="hero-3d-house" fetchpriority="high" decoding="async">
+                        <img src="assets/omulet%201.png" alt="" aria-hidden="true" class="hero-3d-person hero-3d-person-1" loading="lazy" decoding="async">
+                        <img src="assets/omulet%202.png" alt="" aria-hidden="true" class="hero-3d-person hero-3d-person-2" loading="lazy" decoding="async">
+                        <img src="assets/omulet%203.png" alt="" aria-hidden="true" class="hero-3d-person hero-3d-person-3" loading="lazy" decoding="async">
+                        <img src="assets/omulet%204.png" alt="" aria-hidden="true" class="hero-3d-person hero-3d-person-4" loading="lazy" decoding="async">
+                        <img src="assets/omulet%205.png" alt="" aria-hidden="true" class="hero-3d-person hero-3d-person-5" loading="lazy" decoding="async">
+                        <img src="assets/omulet%206.png" alt="" aria-hidden="true" class="hero-3d-person hero-3d-person-6" loading="lazy" decoding="async">
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -182,7 +197,7 @@
         <div class="container">
             <div class="about-intro">
                 <p class="eyebrow">About the event</p>
-                <h2 class="section-title">A private two-day gathering<br>for the people <span class="text-glow">actually</span> shipping AI.</h2>
+                <h2 class="section-title">A private two-day gathering for<br>the people <span class="text-glow">actually</span> shipping AI.</h2>
                 <p class="section-lead">
                     Founders, operators, engineers, executives, and investors building with AI in the real world.
                     Practitioner-led sessions, honest roundtables, private-villa networking, great food,
@@ -467,6 +482,7 @@
 
             <div class="tickets-grid">
                 <article class="ticket-card ticket-card-feature">
+                    <div class="ticket-ribbon" aria-label="Recommended">Recommended</div>
                     <div class="ticket-tag ticket-tag-muted">Require Approval</div>
                     <h3 class="ticket-name">Full Pass <span class="ticket-name-meta">(Day 1 &amp; 2)</span></h3>
                     <p class="ticket-desc">
@@ -609,8 +625,8 @@
             <div class="footer-links">
                 <p class="footer-heading">Curated by</p>
                 <ul>
-                    <li>Andrei Ilie</li>
-                    <li>Alex Gavril</li>
+                    <li><a href="https://www.linkedin.com/in/ilie-andrei-leonard/" target="_blank" rel="noopener noreferrer">Andrei Ilie</a></li>
+                    <li><a href="https://www.linkedin.com/in/alexgavril/" target="_blank" rel="noopener noreferrer">Alex Gavril</a></li>
                 </ul>
             </div>
 
@@ -623,7 +639,17 @@
             </div>
         </div>
         <div class="container footer-bottom">
-            <p>&copy; 2026 AI House Bucharest. All rights reserved.</p>
+            <p class="footer-copy">&copy; 2026 AI House Bucharest. All rights reserved.</p>
+
+            <!-- Built-by credit: liquid-glass chip that expands on hover to reveal
+                 the email. The whole chip is a mailto link. -->
+            <a class="zup-credit" href="mailto:contact@zup.digital?subject=Hi%20Zup%21%20%E2%80%94%20New%20website" aria-label="Website by Zup! — email contact@zup.digital">
+                <img src="assets/fulger%20logo%20zup.png" alt="" class="zup-credit-mark" aria-hidden="true" loading="lazy" decoding="async">
+                <span class="zup-credit-label">Website by Zup!</span>
+                <span class="zup-credit-email" aria-hidden="true">
+                    <span class="zup-credit-arrow">→</span>contact@zup.digital
+                </span>
+            </a>
         </div>
     </footer>
 

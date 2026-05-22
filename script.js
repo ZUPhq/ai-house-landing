@@ -44,7 +44,7 @@
     // not in the viewport via IntersectionObserver toggling a class.
     if ("IntersectionObserver" in window) {
         var pauseTargets = document.querySelectorAll(
-            ".hover-gradient-cta, .expect-perk, .location-chip, .hero-countdown-livedot"
+            ".hover-gradient-cta, .zup-credit, .expect-perk, .location-chip, .hero-countdown-livedot"
         );
         if (pauseTargets.length) {
             var pauseObserver = new IntersectionObserver(function (entries) {
