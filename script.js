@@ -16,7 +16,7 @@
     // %c lets us apply CSS to the message, including background, padding,
     // border-radius, etc. — works in Chrome, Firefox, Safari, Edge.
     console.log(
-        "%c ▲ POWERED BY ZUP! ",
+        "%c ▲ made with ❤️ by ZUP! ",
         "background:#03D777;color:#000;padding:12px 24px;border-radius:8px;" +
         "font-family:Poppins,system-ui,sans-serif;font-weight:700;" +
         "font-size:20px;letter-spacing:1px;" +
