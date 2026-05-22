@@ -11,6 +11,23 @@
 (function () {
     "use strict";
 
+    // ===== EASTER EGG — styled console banner for curious devs =====
+    // Shows up whenever someone opens DevTools (Inspect / View Source).
+    // %c lets us apply CSS to the message, including background, padding,
+    // border-radius, etc. — works in Chrome, Firefox, Safari, Edge.
+    console.log(
+        "%c ▲ POWERED BY ZUP! ",
+        "background:#03D777;color:#000;padding:12px 24px;border-radius:8px;" +
+        "font-family:Poppins,system-ui,sans-serif;font-weight:700;" +
+        "font-size:20px;letter-spacing:1px;" +
+        "text-shadow:0 1px 0 rgba(255,255,255,0.25);"
+    );
+    console.log(
+        "%cCurious? Say hello → contact@zup.digital",
+        "color:rgba(255,255,255,0.7);font-family:Poppins,system-ui,sans-serif;" +
+        "font-size:13px;padding:6px 0 14px;"
+    );
+
     // ---------- LOW-END DEVICE DETECTION ----------
     // Heuristic: <4 GB RAM or <4 CPU cores → strip expensive effects.
     // Adds `.perf-lite` on <html> for CSS to gate on.
