@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Vercel — local project link (contains org/project IDs, regenerated on `vercel link`)
+.vercel/
+
+# Logs
+*.log
+.npm
+.cache/
+
+# Temp
+*.bak

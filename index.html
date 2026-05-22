@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI House Bucharest — Where AI Builders Connect Off-Script</title>
+    <meta name="description" content="A private two-day gathering for founders, operators, engineers, executives, and investors building with AI. June 19-20, Private Mansion, Otopeni. Curated by Andrei Ilie & Alex Gavril.">
+    <meta property="og:title" content="AI House Bucharest — Where AI Builders Connect Off-Script">
+    <meta property="og:description" content="Practitioner-led sessions, honest roundtables, private-villa networking. June 19-20, 2026, Otopeni.">
+    <meta property="og:image" content="assets/ai-house-banner.jpg">
+
+    <!-- Favicon — promocrat triangle mark -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Google Fonts: Poppins (matches inspiration design) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Sync inline script: flip the .js flag on <html> BEFORE first paint.
+         CSS uses this flag to apply initial fade-in (opacity:0) state, so
+         JS-enabled browsers never see sections "flash" visible then hide.
+         JS-disabled browsers skip the flag, so content renders normally. -->
+    <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+    <!-- ============================================
+         ANIMATED AURORA BACKGROUND
+    ============================================= -->
+    <div class="aurora" aria-hidden="true">
+        <div class="aurora-blob aurora-blob-1"></div>
+        <div class="aurora-blob aurora-blob-2"></div>
+        <div class="aurora-blob aurora-blob-3"></div>
+        <div class="aurora-blob aurora-blob-4"></div>
+        <div class="aurora-grid"></div>
+        <div class="aurora-noise"></div>
+    </div>
+
+    <!-- ============================================
+         SVG FILTERS — reusable, hidden
+         #liquid-glass: feDisplacementMap creates the real refraction effect
+         (lens-like bending of the backdrop) that is the defining trait of
+         Apple's Liquid Glass. Falls back gracefully on Safari (which ignores
+         url() in backdrop-filter) — the gradient/shadow layers still
+         produce a credible frosted-glass look.
+    ============================================= -->
+    <svg class="svg-defs" aria-hidden="true">
+        <defs>
+            <filter id="liquid-glass" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="4" result="turb"/>
+                <feDisplacementMap in="SourceGraphic" in2="turb" scale="36" xChannelSelector="R" yChannelSelector="G"/>
+                <feGaussianBlur stdDeviation="0.4"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- ============================================
+         NAVBAR
+    ============================================= -->
+    <header class="site-header" id="site-header">
+        <div class="container nav-container">
+            <a href="#hero" class="brand" aria-label="promocrat — home">
+                <img src="assets/logo-promocrat-white.svg" alt="promocrat" class="brand-logo">
+            </a>
+
+            <nav class="primary-nav" aria-label="Primary">
+                <ul class="nav-list">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#sponsors">Sponsors</a></li>
+                    <li><a href="#curators">Curators</a></li>
+                    <li><a href="#expect">What to expect</a></li>
+                    <li><a href="#tickets">Tickets</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-cta">
+                <a href="#partner" class="btn btn-outline">Be a Partner</a>
+                <a href="#tickets" class="btn btn-primary">Buy Tickets</a>
+            </div>
+
+            <button class="nav-toggle" aria-label="Open menu" id="navToggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ============================================
+         HERO SECTION
+    ============================================= -->
+    <section class="hero" id="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <!-- Powered-by row: pulsing dot + "Powered by" text on the plain
+                     background, then the Instantly logo wrapped in a Liquid Glass chip. -->
+                <div class="hero-attribution">
+                    <span class="location-chip-dot" aria-hidden="true"></span>
+                    <span class="location-chip-text">Powered by</span>
+                    <span class="location-chip">
+                        <img src="assets/partners/instantly.svg" alt="Instantly" class="location-chip-logo" loading="lazy" decoding="async">
+                    </span>
+                </div>
+
+                <h1 class="hero-title">
+                    AI <span class="text-glow">House</span><br>
+                    Bucharest
+                </h1>
+                <p class="hero-tagline">
+                    An off-script gathering for the people actually shipping AI — founders, operators, engineers, executives, and investors.
+                    <span class="hero-tagline-access">Curated, limited capacity, approval-only.</span>
+                </p>
+
+                <!-- Location + date line, plain (no chip, no dot) -->
+                <p class="hero-meta-line">Bucharest · June 19 – 20, 2026</p>
+
+                <!-- INLINE COUNTDOWN — FOMO above the fold. -->
+                <div class="hero-countdown" id="countdown-timer" data-target="2026-06-19T09:00:00+03:00">
+                    <p class="hero-countdown-label">
+                        <span class="hero-countdown-livedot" aria-hidden="true"></span>
+                        The doors open in
+                    </p>
+                    <div class="hero-countdown-units">
+                        <div class="hero-countdown-unit">
+                            <span class="hero-countdown-value" id="cd-days">00</span>
+                            <span class="hero-countdown-name">Days</span>
+                        </div>
+                        <div class="hero-countdown-unit">
+                            <span class="hero-countdown-value" id="cd-hours">00</span>
+                            <span class="hero-countdown-name">Hours</span>
+                        </div>
+                        <div class="hero-countdown-unit">
+                            <span class="hero-countdown-value" id="cd-minutes">00</span>
+                            <span class="hero-countdown-name">Minutes</span>
+                        </div>
+                        <div class="hero-countdown-unit">
+                            <span class="hero-countdown-value" id="cd-seconds">00</span>
+                            <span class="hero-countdown-name">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#tickets" class="btn btn-primary btn-lg">Buy Tickets</a>
+
+                    <!-- Hover-border-gradient CTA — a brand-green "spot" travels
+                         around the perimeter (TOP → LEFT → BOTTOM → RIGHT) on a
+                         smooth 3s loop. On hover the loop pauses and the spot
+                         expands into a uniform glow. Pure CSS, no JS. -->
+                    <a href="#partner" class="hover-gradient-cta" aria-label="Be a Partner">
+                        <span class="hover-gradient-cta-inner">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <polygon points="12 3 22 21 2 21"/>
+                            </svg>
+                            <span>Be a Partner</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <img src="assets/ai-house-banner.jpg" alt="AI House — an exclusive weekend for top-tier AI builders. June 19-20, Private Villa, Otopeni. Workshops, networking, think tanks. Powered by Instantly, supported by ElevenLabs, promocrat, Bolt." class="hero-banner" fetchpriority="high" decoding="async">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         ABOUT THE EVENT
+    ============================================= -->
+    <section class="about-section fade-in" id="about">
+        <div class="container">
+            <div class="about-intro">
+                <p class="eyebrow">About the event</p>
+                <h2 class="section-title">A private two-day gathering<br>for the people <span class="text-glow">actually</span> shipping AI.</h2>
+                <p class="section-lead">
+                    Founders, operators, engineers, executives, and investors building with AI in the real world.
+                    Practitioner-led sessions, honest roundtables, private-villa networking, great food,
+                    open bar evenings, live DJs, and high-context conversations with people actually shipping AI.
+                </p>
+
+                <div class="about-negatives">
+                    <span class="negative">No performative keynotes.</span>
+                    <span class="negative">No passive audience.</span>
+                    <span class="negative">No corporate filler.</span>
+                </div>
+
+                <p class="about-closer">
+                    Just real conversations, practical sessions, and meaningful connections in a private
+                    setting designed for people building, scaling, deploying, and adopting AI.
+                    <span class="about-quote">Thousands may apply. Only a curated room gets in.</span>
+                </p>
+
+                <!-- Press-to-reveal Bolt perk. Starts covered by a dark "We got a surprise" pane;
+                     click bursts brand-green confetti and reveals the actual Bolt callout. -->
+                <div class="perk-reveal" id="boltPerk">
+                    <button class="perk-cover" type="button" id="boltPerkCover" aria-expanded="false" aria-controls="boltPerkInner">
+                        <span class="perk-cover-spark" aria-hidden="true">✦</span>
+                        <span class="perk-cover-title">We got a surprise for you</span>
+                        <span class="perk-cover-hint">Click to unwrap</span>
+                    </button>
+
+                    <div class="perk-confetti" id="boltPerkConfetti" aria-hidden="true"></div>
+
+                    <div class="expect-perk perk-revealed" id="boltPerkInner" aria-hidden="true">
+                        <div class="expect-perk-tag">
+                            <img src="assets/partners/bolt.png" alt="Bolt" class="expect-perk-logo" loading="lazy" decoding="async">
+                        </div>
+                        <p>The first <strong>50 approved attendees</strong> receive complimentary Bolt ride vouchers to and from the venue.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         POWERED BY — named sponsors
+    ============================================= -->
+    <section class="sponsors-section fade-in" id="sponsors">
+        <!-- On mobile this container becomes position:sticky inside a tall
+             outer section, creating the "scroll vertically → cards slide
+             horizontally" effect. On desktop it renders as a normal flow. -->
+        <div class="container sponsors-content">
+            <p class="eyebrow eyebrow-center">Powered by</p>
+            <h2 class="section-title section-title-center">Backed by the operators<br>behind the products you use.</h2>
+
+            <div class="sponsors-grid" id="sponsorsGrid">
+                <article class="sponsor-card sponsor-card-main">
+                    <p class="sponsor-tier">Main Sponsor</p>
+                    <div class="sponsor-logo">
+                        <img src="assets/partners/instantly.svg" alt="Instantly.ai" loading="lazy" decoding="async">
+                    </div>
+                </article>
+                <article class="sponsor-card">
+                    <p class="sponsor-tier">Experience Partner</p>
+                    <div class="sponsor-logo">
+                        <img src="assets/partners/elevenlabs.svg" alt="ElevenLabs.io" loading="lazy" decoding="async">
+                    </div>
+                </article>
+                <article class="sponsor-card">
+                    <p class="sponsor-tier">Media Partner</p>
+                    <div class="sponsor-logo">
+                        <img src="assets/partners/the-recursive.png" alt="TheRecursive.com" loading="lazy" decoding="async">
+                    </div>
+                </article>
+                <article class="sponsor-card">
+                    <p class="sponsor-tier">Mobility Partner</p>
+                    <div class="sponsor-logo">
+                        <img src="assets/partners/bolt.png" alt="Bolt" loading="lazy" decoding="async">
+                    </div>
+                </article>
+            </div>
+
+            <!-- Mobile-only dot navigation for the sponsors slider -->
+            <div class="sponsors-dots" id="sponsorsDots" aria-hidden="true">
+                <button type="button" class="sponsors-dot is-active" data-slide="0" aria-label="Slide 1"></button>
+                <button type="button" class="sponsors-dot" data-slide="1" aria-label="Slide 2"></button>
+                <button type="button" class="sponsors-dot" data-slide="2" aria-label="Slide 3"></button>
+                <button type="button" class="sponsors-dot" data-slide="3" aria-label="Slide 4"></button>
+            </div>
+
+            <!-- Inside the sticky pin so it stays visible while cards slide -->
+            <p class="sponsors-footnote">
+                Want to get involved as a community partner?
+                <a href="mailto:sandra.ehigiator@promocrat.ro">sandra.ehigiator@promocrat.ro</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CURATED BY — Andrei Ilie + Alex Gavril
+    ============================================= -->
+    <section class="curators-section fade-in" id="curators">
+        <div class="container">
+            <p class="eyebrow">Curated by</p>
+            <h2 class="section-title">The people <span class="text-glow">in</span> the room.</h2>
+            <p class="section-lead">
+                AI House Bucharest is curated by two founders who have spent years building, scaling,
+                and connecting the people doing the real work in tech and AI.
+            </p>
+
+            <div class="curators-grid">
+                <article class="curator-card">
+                    <a href="https://www.linkedin.com/in/ilie-andrei-leonard/" target="_blank" rel="noopener noreferrer" class="curator-linkedin" aria-label="Andrei Ilie on LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <div class="curator-photo-wrap">
+                        <img src="assets/curators/andrei-ilie.jpeg" alt="Andrei Ilie" class="curator-photo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="curator-info">
+                        <div class="curator-logo">
+                            <img src="assets/partners/instantly.svg" alt="Instantly.ai" class="curator-logo-img curator-logo-img--white" loading="lazy" decoding="async">
+                        </div>
+                        <h3 class="curator-name">Andrei Ilie</h3>
+                        <p class="curator-role">
+                            Head of AI @ Instantly.ai
+                            <span class="curator-role-extra">Forbes 30 under 30</span>
+                        </p>
+                        <p class="curator-bio">
+                            Founder and builder with hands-on experience deploying AI and automation at scale.
+                            Currently scaling a portfolio of businesses through ASYNNC GROUP.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="curator-card">
+                    <a href="https://www.linkedin.com/in/alexgavril/" target="_blank" rel="noopener noreferrer" class="curator-linkedin" aria-label="Alex Gavril on LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <div class="curator-photo-wrap">
+                        <img src="assets/curators/alex-gavril.jpeg" alt="Alex Gavril" class="curator-photo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="curator-info">
+                        <div class="curator-logo">
+                            <img src="assets/logo-promocrat-white.svg" alt="promocrat" class="curator-logo-img" loading="lazy" decoding="async">
+                        </div>
+                        <h3 class="curator-name">Alex Gavril</h3>
+                        <p class="curator-role">
+                            CEO ▲ promocrat
+                            <span class="curator-role-extra">Forbes 30 under 30</span>
+                        </p>
+                        <p class="curator-bio">
+                            Startup mentor, investor, and founder of ▲neomixers — a 1,500+ member community
+                            with 14 events in the past year and 100+ attendees per event. One rule:
+                            no pitch, just people.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         WHAT TO EXPECT — Timeline format
+    ============================================= -->
+    <section class="timeline-section fade-in" id="expect">
+        <div class="container">
+            <p class="eyebrow">What to expect</p>
+            <h2 class="section-title">Two days. One villa. <span class="text-glow">Zero</span> filler.</h2>
+            <p class="section-lead">
+                A curated weekend of practitioner-led sessions, honest roundtables, and the
+                kind of high-context networking that only happens when the right room shares a roof.
+            </p>
+        </div>
+
+        <div class="timeline" id="timeline">
+            <div class="timeline-rail" aria-hidden="true">
+                <div class="timeline-rail-fill" id="timeline-rail-fill"></div>
+            </div>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">01</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Practitioner sessions</h3>
+                    <p>Practitioner-led sessions from people doing the work — not panels of generalists. Real lessons from real builders, no recycled deck slides.</p>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">02</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Roundtables</h3>
+                    <p>Founder, operator, and executive roundtables. Honest conversations, off the record, with the people deciding how AI gets shipped and adopted in their organisations.</p>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">03</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Workshops</h3>
+                    <p>Hands-on workshops on building, scaling, deploying, and adopting AI in production. Bring problems, leave with answers.</p>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">04</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Curated hospitality</h3>
+                    <p>Curated lunches, snacks, refreshments, and full hospitality across both days. Less queueing for coffee, more time talking to the right people.</p>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">05</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Day 1 BBQ &amp; DJ</h3>
+                    <p>Day 1 closes with live BBQ cooking, open bar, and a DJ set on the villa grounds. The format that turns acquaintances into actual contacts.</p>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">06</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Day 2 evening mixer</h3>
+                    <p>Day 2 flows into an exclusive evening mixer with live DJ and open bar. High-quality conversations with the people who spent two days building together.</p>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">07</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Private villa setting</h3>
+                    <p>A private villa designed to feel more like a retreat than a conference. No fluorescent lights, no name-tag lanyards, no convention-centre lobby.</p>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-num">08</div>
+                </div>
+                <div class="timeline-body">
+                    <h3 class="timeline-body-title">Relaxation corner</h3>
+                    <p>A relaxation corner with games designed to bring people together between sessions. Sometimes the best intro is over a casual round of something, not a forced "what do you do?"</p>
+                </div>
+            </article>
+        </div>
+
+    </section>
+
+    <!-- ============================================
+         TICKETS
+    ============================================= -->
+    <section class="tickets-section fade-in" id="tickets">
+        <div class="container">
+            <p class="eyebrow eyebrow-center">Tickets</p>
+            <h2 class="section-title section-title-center">Pick your pass</h2>
+            <p class="section-lead section-lead-center">
+                All tickets require approval. Payment link is sent once your application is confirmed.
+                Limited spots — applications are processed in order.
+            </p>
+
+            <div class="tickets-grid">
+                <article class="ticket-card ticket-card-feature">
+                    <div class="ticket-tag ticket-tag-muted">Require Approval</div>
+                    <h3 class="ticket-name">Full Pass <span class="ticket-name-meta">(Day 1 &amp; 2)</span></h3>
+                    <p class="ticket-desc">
+                        Full two-day access to AI House Bucharest. Practitioner-led workshops,
+                        candid roundtables, networking, and the Day 2 evening mixer. Reserved for
+                        founders actively building AI-driven products and executives leading AI
+                        adoption at scale.
+                    </p>
+                    <div class="ticket-price"><span class="price-currency">€</span><span class="price-value">189</span></div>
+                    <p class="ticket-stock">50 available spots</p>
+                    <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener" class="btn btn-outline btn-block">Apply for Full Pass</a>
+                </article>
+
+                <article class="ticket-card">
+                    <div class="ticket-tag ticket-tag-muted">Require Approval</div>
+                    <h3 class="ticket-name">Day 2 Pass</h3>
+                    <p class="ticket-desc">
+                        Single-day access for founders and executives joining for Day 2.
+                        Practitioner-led workshops, candid roundtables, networking, and the
+                        evening mixer included.
+                    </p>
+                    <div class="ticket-price"><span class="price-currency">€</span><span class="price-value">119</span></div>
+                    <p class="ticket-stock">50 available spots</p>
+                    <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener" class="btn btn-outline btn-block">Apply for Day 2</a>
+                </article>
+
+                <article class="ticket-card">
+                    <div class="ticket-tag ticket-tag-muted">Require Approval</div>
+                    <h3 class="ticket-name">Day 1 Pass</h3>
+                    <p class="ticket-desc">
+                        Full Day 1 access to AI House Bucharest. Practitioner-led workshops,
+                        candid roundtables, and networking with founders and executives actively
+                        building and scaling AI.
+                    </p>
+                    <div class="ticket-price"><span class="price-currency">€</span><span class="price-value">89</span></div>
+                    <p class="ticket-stock">Limited spots</p>
+                    <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener" class="btn btn-outline btn-block">Apply for Day 1</a>
+                </article>
+
+                <article class="ticket-card">
+                    <div class="ticket-tag ticket-tag-muted">Require Approval</div>
+                    <h3 class="ticket-name">Evening Mixer <span class="ticket-name-meta">(Day 2)</span></h3>
+                    <p class="ticket-desc">
+                        The Day 2 mixer. Open to tech professionals and operators working in or
+                        alongside AI. No agenda, just the right people in the right room.
+                    </p>
+                    <div class="ticket-price"><span class="price-currency">€</span><span class="price-value">49</span></div>
+                    <p class="ticket-stock">30 available spots</p>
+                    <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener" class="btn btn-outline btn-block">Apply for Mixer</a>
+                </article>
+            </div>
+
+            <p class="tickets-footnote">
+                Free to apply on <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener">Luma</a>.
+                Each application is reviewed by the organizing team.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PARTNERS SLIDER (Partner with AI House CTA + logo marquee)
+    ============================================= -->
+    <section class="partners-strip fade-in" id="partners">
+        <div class="container partners-grid">
+            <div class="partners-cta">
+                <h3 class="partners-cta-title">Partner with <span class="text-glow">AI House</span></h3>
+                <p class="partners-cta-text">Put your brand in front of Romania's most curated room of AI builders, founders and operators.</p>
+                <a href="#partner" class="btn btn-primary">Be a Partner</a>
+            </div>
+
+            <div class="partners-slider" aria-label="Our partners">
+                <div class="partners-track" id="partnersTrack">
+                    <!-- Real partners only — neomixers / promocrat are organizers, not partners.
+                         Duplicated 3x for a populated marquee with only 4 logos. -->
+                    <div class="partner-logo"><img src="assets/partners/instantly.svg" alt="Instantly.ai" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/elevenlabs.svg" alt="ElevenLabs" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/the-recursive.png" alt="The Recursive" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/bolt.png" alt="Bolt" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/instantly.svg" alt="Instantly.ai" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/elevenlabs.svg" alt="ElevenLabs" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/the-recursive.png" alt="The Recursive" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/bolt.png" alt="Bolt" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/instantly.svg" alt="Instantly.ai" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/elevenlabs.svg" alt="ElevenLabs" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/the-recursive.png" alt="The Recursive" loading="lazy" decoding="async"></div>
+                    <div class="partner-logo"><img src="assets/partners/bolt.png" alt="Bolt" loading="lazy" decoding="async"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         BE A PARTNER SECTION
+    ============================================= -->
+    <section class="partner-section fade-in" id="partner">
+        <div class="container">
+            <div class="partner-content">
+                <p class="eyebrow">Partnership</p>
+                <h2 class="section-title">Put your brand<br>in the <span class="text-glow">right room</span>.</h2>
+                <p class="section-lead">
+                    AI House Bucharest is a curated, approval-only event. The room is small, senior,
+                    and made up of the people building AI in production. If your product, service or company
+                    serves that audience, let's talk.
+                </p>
+
+                <ul class="partner-perks">
+                    <li>Brand exposure across all event surfaces</li>
+                    <li>Speaking and workshop slots (select tiers)</li>
+                    <li>Direct intros to attendees and curators</li>
+                    <li>Co-branded content with promocrat, Andrei Ilie &amp; Alex Gavril</li>
+                </ul>
+
+                <a href="mailto:sandra.ehigiator@promocrat.ro?subject=AI%20House%20Bucharest%20—%20Partnership" class="btn btn-primary btn-lg">Become a Partner</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+    ============================================= -->
+    <footer class="site-footer fade-in">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <img src="assets/logo-promocrat-white.svg" alt="promocrat" class="footer-logo-img" loading="lazy" decoding="async">
+                <p class="footer-tag">AI House Bucharest — an exclusive weekend for top-tier AI builders.</p>
+                <p class="footer-meta">June 19 &amp; 20, 2026 · Private Mansion, Otopeni</p>
+            </div>
+
+            <div class="footer-links">
+                <p class="footer-heading">Event</p>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#sponsors">Sponsors</a></li>
+                    <li><a href="#curators">Curators</a></li>
+                    <li><a href="#expect">What to expect</a></li>
+                    <li><a href="#tickets">Tickets</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <p class="footer-heading">Curated by</p>
+                <ul>
+                    <li>Andrei Ilie</li>
+                    <li>Alex Gavril</li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <p class="footer-heading">Contact</p>
+                <ul>
+                    <li><a href="mailto:sandra.ehigiator@promocrat.ro">sandra.ehigiator@promocrat.ro</a></li>
+                    <li><a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener">Luma event page</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 AI House Bucharest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
