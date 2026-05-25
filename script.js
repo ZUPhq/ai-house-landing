@@ -386,4 +386,141 @@
         });
     });
 
+    // ---------- PARTNER MODAL ----------
+    // Two-step modal: choice screen → form. Opened by [data-partner-open],
+    // closed by [data-partner-close] or ESC / backdrop click.
+    var partnerModal = document.getElementById("partnerModal");
+    if (partnerModal) {
+        var openTriggers = document.querySelectorAll("[data-partner-open]");
+        var closeTriggers = partnerModal.querySelectorAll("[data-partner-close]");
+        var stepTriggers = partnerModal.querySelectorAll("[data-partner-step-show]");
+        var steps = partnerModal.querySelectorAll("[data-partner-step]");
+        var form = document.getElementById("partnerForm");
+        var submitBtn = document.getElementById("pf-submit");
+        var errorEl = document.getElementById("pf-error");
+        var successEl = document.getElementById("pf-success");
+        var lastFocus = null;
+
+        function showStep(name) {
+            for (var i = 0; i < steps.length; i++) {
+                steps[i].hidden = steps[i].getAttribute("data-partner-step") !== name;
+            }
+            // Focus first input when switching to the form step
+            if (name === "form") {
+                var firstInput = document.getElementById("pf-name");
+                if (firstInput) setTimeout(function () { firstInput.focus(); }, 50);
+            }
+        }
+
+        function openModal() {
+            lastFocus = document.activeElement;
+            partnerModal.classList.add("is-open");
+            partnerModal.setAttribute("aria-hidden", "false");
+            document.documentElement.classList.add("modal-open");
+            showStep("choice");
+            resetForm();
+        }
+
+        function closeModal() {
+            partnerModal.classList.remove("is-open");
+            partnerModal.setAttribute("aria-hidden", "true");
+            document.documentElement.classList.remove("modal-open");
+            if (lastFocus && typeof lastFocus.focus === "function") {
+                lastFocus.focus();
+            }
+        }
+
+        function resetForm() {
+            if (form) form.reset();
+            if (errorEl) { errorEl.hidden = true; errorEl.textContent = ""; }
+            if (successEl) successEl.hidden = true;
+            if (form) form.hidden = false;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove("is-loading");
+            }
+        }
+
+        for (var i = 0; i < openTriggers.length; i++) {
+            openTriggers[i].addEventListener("click", openModal);
+        }
+        for (var j = 0; j < closeTriggers.length; j++) {
+            closeTriggers[j].addEventListener("click", closeModal);
+        }
+        for (var k = 0; k < stepTriggers.length; k++) {
+            (function (trigger) {
+                trigger.addEventListener("click", function () {
+                    showStep(trigger.getAttribute("data-partner-step-show"));
+                });
+            })(stepTriggers[k]);
+        }
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && partnerModal.classList.contains("is-open")) {
+                closeModal();
+            }
+        });
+
+        if (form) {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                if (errorEl) { errorEl.hidden = true; errorEl.textContent = ""; }
+
+                var data = {
+                    name: form.elements["name"].value.trim(),
+                    email: form.elements["email"].value.trim(),
+                    company: form.elements["company"].value.trim(),
+                    contribution: form.elements["contribution"].value.trim(),
+                    website: form.elements["website"].value, // honeypot
+                };
+
+                // Lightweight client validation — server validates again
+                if (!data.name || !data.email || !data.company || !data.contribution) {
+                    showError("Please fill in every field.");
+                    return;
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+                    showError("That email doesn't look right.");
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.classList.add("is-loading");
+
+                fetch("/api/partner", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                })
+                .then(function (res) {
+                    return res.json().then(function (json) {
+                        return { ok: res.ok, status: res.status, body: json };
+                    });
+                })
+                .then(function (result) {
+                    if (!result.ok) {
+                        var msg = (result.body && result.body.error) || "Something went wrong. Please try again.";
+                        showError(msg);
+                        return;
+                    }
+                    form.hidden = true;
+                    successEl.hidden = false;
+                })
+                .catch(function () {
+                    showError("Network error. Please try again.");
+                })
+                .then(function () {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove("is-loading");
+                });
+            });
+        }
+
+        function showError(msg) {
+            if (!errorEl) return;
+            errorEl.textContent = msg;
+            errorEl.hidden = false;
+        }
+    }
+
 })();

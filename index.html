@@ -595,7 +595,7 @@
                     <li>Co-branded content with promocrat, Andrei Ilie &amp; Alex Gavril</li>
                 </ul>
 
-                <a href="mailto:sandra.ehigiator@promocrat.ro?subject=AI%20House%20Bucharest%20—%20Partnership" class="btn btn-primary btn-lg">Become a Partner</a>
+                <button type="button" class="btn btn-primary btn-lg" data-partner-open>Become a Partner</button>
             </div>
         </div>
     </section>
@@ -652,6 +652,106 @@
             </a>
         </div>
     </footer>
+
+    <!-- ============================================
+         PARTNER MODAL — choice (email / form) + form
+         Hidden by default. Opened by [data-partner-open] buttons via JS.
+    ============================================= -->
+    <div class="modal" id="partnerModal" aria-hidden="true">
+        <div class="modal-backdrop" data-partner-close></div>
+
+        <!-- STEP 1 — choice between email and form -->
+        <div class="modal-card modal-card--choice" role="dialog" aria-modal="true" aria-labelledby="partnerChoiceTitle" data-partner-step="choice">
+            <button type="button" class="modal-close" aria-label="Close" data-partner-close>×</button>
+            <p class="eyebrow modal-eyebrow">Partnership</p>
+            <h3 class="modal-title" id="partnerChoiceTitle">How do you want to <span class="text-glow">reach us</span>?</h3>
+            <p class="modal-lead">Pick whichever feels lighter — both land in the same inbox.</p>
+
+            <div class="modal-choices">
+                <a class="modal-choice" href="mailto:sandra.ehigiator@promocrat.ro?subject=AI%20House%20Bucharest%20—%20Partnership">
+                    <span class="modal-choice-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                    </span>
+                    <span class="modal-choice-title">Send an email</span>
+                    <span class="modal-choice-text">Write to us directly. Best if you already know what you want to discuss.</span>
+                    <span class="modal-choice-cta">sandra.ehigiator@promocrat.ro →</span>
+                </a>
+
+                <button type="button" class="modal-choice" data-partner-step-show="form">
+                    <span class="modal-choice-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M8 11h8M8 15h5M8 7h6"/></svg>
+                    </span>
+                    <span class="modal-choice-title">Fill out the form</span>
+                    <span class="modal-choice-text">Four short fields — name, email, company, and how you'd contribute.</span>
+                    <span class="modal-choice-cta">Open the form →</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2 — the actual form -->
+        <div class="modal-card modal-card--form" role="dialog" aria-modal="true" aria-labelledby="partnerFormTitle" data-partner-step="form" hidden>
+            <button type="button" class="modal-close" aria-label="Close" data-partner-close>×</button>
+            <button type="button" class="modal-back" data-partner-step-show="choice" aria-label="Back">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Back
+            </button>
+            <p class="eyebrow modal-eyebrow">Become a partner</p>
+            <h3 class="modal-title" id="partnerFormTitle">Tell us a little <span class="text-glow">about you</span>.</h3>
+
+            <form class="partner-form" id="partnerForm" novalidate>
+                <!-- Honeypot — hidden from humans, but bots happily fill it. -->
+                <div class="hp-field" aria-hidden="true">
+                    <label>Website (leave empty)</label>
+                    <input type="text" name="website" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label" for="pf-name">Name</label>
+                    <input class="form-input" type="text" id="pf-name" name="name" required maxlength="200" autocomplete="name">
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label" for="pf-email">Email</label>
+                    <input class="form-input" type="email" id="pf-email" name="email" required maxlength="200" autocomplete="email">
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label" for="pf-company">Company</label>
+                    <input class="form-input" type="text" id="pf-company" name="company" required maxlength="200" autocomplete="organization">
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label" for="pf-contribution">How do you see your contribution to AI House?</label>
+                    <textarea class="form-input form-textarea" id="pf-contribution" name="contribution" required maxlength="5000" rows="4"></textarea>
+                </div>
+
+                <p class="form-error" id="pf-error" hidden></p>
+
+                <button type="submit" class="btn btn-primary btn-lg form-submit" id="pf-submit">
+                    <span class="form-submit-label">Send application</span>
+                    <span class="form-submit-spinner" aria-hidden="true"></span>
+                </button>
+            </form>
+
+            <!-- Success state — swapped in after a successful submit -->
+            <div class="form-success" id="pf-success" hidden>
+                <div class="form-success-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </div>
+                <h4 class="form-success-title">Got it — thank you.</h4>
+                <p class="form-success-text">We'll be in touch from <strong>sandra.ehigiator@promocrat.ro</strong> within a few days.</p>
+                <button type="button" class="btn btn-outline" data-partner-close>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vercel Analytics — vanilla integration (not the Next.js npm package).
+         Script is auto-served by Vercel when Analytics is enabled in the
+         project dashboard. The tiny shim queues calls before the script loads. -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 
     <script src="script.js"></script>
 </body>

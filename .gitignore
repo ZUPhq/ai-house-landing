@@ -15,5 +15,12 @@
 .npm
 .cache/
 
+# Node — local install only; Vercel rebuilds from package-lock.json
+node_modules/
+
+# Local env file (never commit secrets — set them in Vercel dashboard)
+.env
+.env.local
+
 # Temp
 *.bak
