@@ -399,7 +399,41 @@
         var submitBtn = document.getElementById("pf-submit");
         var errorEl = document.getElementById("pf-error");
         var successEl = document.getElementById("pf-success");
+        var formCard = partnerModal.querySelector(".modal-card--form");
+        var confettiHost = document.getElementById("formConfetti");
         var lastFocus = null;
+
+        // Burst ~28 confetti pieces from the center of the form card.
+        // Reuses .perk-confetti-piece styling from the Bolt perk.
+        function burstConfetti() {
+            if (!confettiHost) return;
+            if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+            var pieces = 28;
+            for (var i = 0; i < pieces; i++) {
+                var piece = document.createElement("span");
+                piece.className = "perk-confetti-piece";
+                var angle = (Math.PI * 2 * i) / pieces + (Math.random() - 0.5) * 0.4;
+                var distance = 120 + Math.random() * 180;
+                var endX = Math.cos(angle) * distance;
+                var endY = Math.sin(angle) * distance + Math.random() * 40 + 20;
+                var rot = (Math.random() - 0.5) * 720;
+                piece.style.setProperty("--end-x", endX.toFixed(0) + "px");
+                piece.style.setProperty("--end-y", endY.toFixed(0) + "px");
+                piece.style.setProperty("--end-rot", rot.toFixed(0) + "deg");
+                piece.style.animationDelay = (Math.random() * 80) + "ms";
+                if (i % 3 === 0) piece.style.background = "#03BED7";  // light blue
+                else if (i % 5 === 0) piece.style.background = "#FFFFFF";
+                confettiHost.appendChild(piece);
+                setTimeout(function (el) {
+                    return function () { el.remove(); };
+                }(piece), 1500);
+            }
+        }
+
+        function clearConfetti() {
+            if (confettiHost) confettiHost.innerHTML = "";
+        }
 
         function showStep(name) {
             for (var i = 0; i < steps.length; i++) {
@@ -435,10 +469,12 @@
             if (errorEl) { errorEl.hidden = true; errorEl.textContent = ""; }
             if (successEl) successEl.hidden = true;
             if (form) form.hidden = false;
+            if (formCard) formCard.classList.remove("is-success-state");
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.classList.remove("is-loading");
             }
+            clearConfetti();
         }
 
         for (var i = 0; i < openTriggers.length; i++) {
@@ -506,6 +542,8 @@
                     }
                     form.hidden = true;
                     successEl.hidden = false;
+                    if (formCard) formCard.classList.add("is-success-state");
+                    burstConfetti();
                 })
                 .catch(function () {
                     showError("Network error. Please try again.");

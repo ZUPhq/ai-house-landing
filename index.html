@@ -690,6 +690,9 @@
 
         <!-- STEP 2 — the actual form -->
         <div class="modal-card modal-card--form" role="dialog" aria-modal="true" aria-labelledby="partnerFormTitle" data-partner-step="form" hidden>
+            <!-- Confetti container — particles dropped in via JS on success -->
+            <div class="confetti-host" id="formConfetti" aria-hidden="true"></div>
+
             <button type="button" class="modal-close" aria-label="Close" data-partner-close>×</button>
             <button type="button" class="modal-back" data-partner-step-show="choice" aria-label="Back">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -734,10 +737,9 @@
 
                 <p class="form-error" id="pf-error" hidden></p>
 
-                <button type="submit" class="form-submit-gradient" id="pf-submit">
+                <button type="submit" class="form-submit-glass" id="pf-submit">
                     <span class="form-submit-label">Send &rarr;</span>
                     <span class="form-submit-spinner" aria-hidden="true"></span>
-                    <span class="bottom-gradient" aria-hidden="true"></span>
                 </button>
             </form>
 
