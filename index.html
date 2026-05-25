@@ -737,19 +737,16 @@
 
                 <p class="form-error" id="pf-error" hidden></p>
 
-                <button type="submit" class="form-submit-glass" id="pf-submit">
+                <button type="submit" class="btn-glass" id="pf-submit">
                     <span class="form-submit-label">Send &rarr;</span>
                     <span class="form-submit-spinner" aria-hidden="true"></span>
                 </button>
             </form>
 
-            <!-- Success state — minimal: just "Sent" + close -->
+            <!-- Success state — minimal: just "Sent!" + glass close button -->
             <div class="form-success form-success--minimal" id="pf-success" hidden>
-                <div class="form-success-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                </div>
-                <h4 class="form-success-title">Sent</h4>
-                <button type="button" class="btn btn-outline" data-partner-close>Close</button>
+                <h4 class="form-success-title">Sent!</h4>
+                <button type="button" class="btn-glass btn-glass--auto" data-partner-close>Close</button>
             </div>
         </div>
     </div>
