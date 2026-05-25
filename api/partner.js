@@ -27,12 +27,13 @@ export default async function handler(req, res) {
             return res.status(200).json({ ok: true });
         }
 
-        const name = String(body.name || "").trim();
+        const nume = String(body.nume || "").trim();
+        const prenume = String(body.prenume || "").trim();
         const email = String(body.email || "").trim();
         const company = String(body.company || "").trim();
         const contribution = String(body.contribution || "").trim();
 
-        if (!name || !email || !company || !contribution) {
+        if (!nume || !prenume || !email || !company || !contribution) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
@@ -42,10 +43,14 @@ export default async function handler(req, res) {
         }
 
         // Length limits — prevent abuse via giant payloads.
-        if (name.length > 200 || email.length > 200 ||
+        if (nume.length > 100 || prenume.length > 100 || email.length > 200 ||
             company.length > 200 || contribution.length > 5000) {
             return res.status(400).json({ error: "Field too long" });
         }
+
+        // Sheet has a single Name column — combine "Prenume Nume" in natural
+        // Romanian conversational order ("Ioana Popescu").
+        const name = prenume + " " + nume;
 
         if (!SHEET_ID || !process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
             console.error("Missing GOOGLE_SHEET_ID or GOOGLE_SERVICE_ACCOUNT_JSON env vars");

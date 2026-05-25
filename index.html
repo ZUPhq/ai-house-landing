@@ -705,41 +705,48 @@
                     <input type="text" name="website" tabindex="-1" autocomplete="off">
                 </div>
 
-                <div class="form-row">
-                    <label class="form-label" for="pf-name">Name</label>
-                    <input class="form-input" type="text" id="pf-name" name="name" required maxlength="200" autocomplete="name">
+                <!-- Two-column row on desktop, stacks on mobile -->
+                <div class="form-row-split">
+                    <div class="form-row">
+                        <label class="form-label" for="pf-nume">Nume</label>
+                        <input class="form-input" type="text" id="pf-nume" name="nume" placeholder="Popescu" required maxlength="100" autocomplete="family-name">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label" for="pf-prenume">Prenume</label>
+                        <input class="form-input" type="text" id="pf-prenume" name="prenume" placeholder="Ioana" required maxlength="100" autocomplete="given-name">
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <label class="form-label" for="pf-email">Email</label>
-                    <input class="form-input" type="email" id="pf-email" name="email" required maxlength="200" autocomplete="email">
+                    <input class="form-input" type="email" id="pf-email" name="email" placeholder="ioana@company.com" required maxlength="200" autocomplete="email">
                 </div>
 
                 <div class="form-row">
                     <label class="form-label" for="pf-company">Company</label>
-                    <input class="form-input" type="text" id="pf-company" name="company" required maxlength="200" autocomplete="organization">
+                    <input class="form-input" type="text" id="pf-company" name="company" placeholder="Acme AI" required maxlength="200" autocomplete="organization">
                 </div>
 
                 <div class="form-row">
                     <label class="form-label" for="pf-contribution">How do you see your contribution to AI House?</label>
-                    <textarea class="form-input form-textarea" id="pf-contribution" name="contribution" required maxlength="5000" rows="4"></textarea>
+                    <textarea class="form-input form-textarea" id="pf-contribution" name="contribution" placeholder="A few sentences are enough." required maxlength="5000" rows="4"></textarea>
                 </div>
 
                 <p class="form-error" id="pf-error" hidden></p>
 
-                <button type="submit" class="btn btn-primary btn-lg form-submit" id="pf-submit">
-                    <span class="form-submit-label">Send application</span>
+                <button type="submit" class="form-submit-gradient" id="pf-submit">
+                    <span class="form-submit-label">Send &rarr;</span>
                     <span class="form-submit-spinner" aria-hidden="true"></span>
+                    <span class="bottom-gradient" aria-hidden="true"></span>
                 </button>
             </form>
 
-            <!-- Success state — swapped in after a successful submit -->
-            <div class="form-success" id="pf-success" hidden>
+            <!-- Success state — minimal: just "Sent" + close -->
+            <div class="form-success form-success--minimal" id="pf-success" hidden>
                 <div class="form-success-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                 </div>
-                <h4 class="form-success-title">Got it — thank you.</h4>
-                <p class="form-success-text">We'll be in touch from <strong>sandra.ehigiator@promocrat.ro</strong> within a few days.</p>
+                <h4 class="form-success-title">Sent</h4>
                 <button type="button" class="btn btn-outline" data-partner-close>Close</button>
             </div>
         </div>

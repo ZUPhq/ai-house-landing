@@ -407,7 +407,7 @@
             }
             // Focus first input when switching to the form step
             if (name === "form") {
-                var firstInput = document.getElementById("pf-name");
+                var firstInput = document.getElementById("pf-nume");
                 if (firstInput) setTimeout(function () { firstInput.focus(); }, 50);
             }
         }
@@ -467,7 +467,8 @@
                 if (errorEl) { errorEl.hidden = true; errorEl.textContent = ""; }
 
                 var data = {
-                    name: form.elements["name"].value.trim(),
+                    nume: form.elements["nume"].value.trim(),
+                    prenume: form.elements["prenume"].value.trim(),
                     email: form.elements["email"].value.trim(),
                     company: form.elements["company"].value.trim(),
                     contribution: form.elements["contribution"].value.trim(),
@@ -475,7 +476,7 @@
                 };
 
                 // Lightweight client validation — server validates again
-                if (!data.name || !data.email || !data.company || !data.contribution) {
+                if (!data.nume || !data.prenume || !data.email || !data.company || !data.contribution) {
                     showError("Please fill in every field.");
                     return;
                 }
