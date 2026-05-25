@@ -3460,6 +3460,12 @@ html.js .fade-in.is-visible {
     gap: 28px;
 }
 
+/* `display: flex` above wins over the browser default `[hidden] { display: none }`,
+   so we explicitly re-assert the hidden state here. */
+.form-success--minimal[hidden] {
+    display: none;
+}
+
 .form-success--minimal .form-success-title {
     font-size: clamp(40px, 7vw, 56px);
     font-weight: 700;
