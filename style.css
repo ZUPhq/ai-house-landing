@@ -2812,10 +2812,10 @@ ul {
     font-weight: 600;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: var(--color-light-blue);
+    color: var(--color-primary);
     padding: 4px 12px;
     border-radius: 999px;
-    border: 1px dashed rgba(3, 190, 215, 0.4);
+    border: 1px dashed rgba(3, 215, 119, 0.4);
 }
 
 .agenda-parallel-grid {
@@ -2887,9 +2887,10 @@ ul {
         padding: 0;
     }
 
-    /* Full-height pin. The cards GROW to fill the viewport (full-bleed slide
-       style) so there's no empty void below them — label sits at the top with
-       a small padding, the cards fill the middle, dots anchor at the bottom. */
+    /* Full-height pin with the small reel centered. Cards keep their natural
+       (content) height — the centered group splits the leftover space evenly
+       top/bottom so it reads as an intentional slide, not a void. Full-height
+       pin keeps the slide timing exact (no dead scroll). */
     .agenda-parallel-sticky {
         position: sticky;
         top: 0;
@@ -2897,25 +2898,25 @@ ul {
         height: 100dvh;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         overflow: hidden;
-        padding: 84px 0 22px;
+        padding: 76px 0 24px;
     }
 
     .agenda-parallel-label {
-        margin: 0 auto 14px;     /* centered above the reel */
+        margin: 0 auto 16px;     /* centered above the reel */
         flex-shrink: 0;
     }
 
     .agenda-parallel-grid {
-        flex: 1 1 auto;          /* fill the viewport — kills the empty void */
-        min-height: 0;
+        flex: 0 0 auto;          /* natural height — smaller cards */
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         gap: 14px;
         grid-template-columns: none;
         will-change: transform;
-        align-items: stretch;     /* each card fills the track height */
+        align-items: stretch;     /* both cards equal height */
         /* Break out of container padding so cards travel past the edges */
         margin: 0 calc(-1 * var(--container-pad));
         padding: 0 var(--container-pad);
@@ -2924,16 +2925,13 @@ ul {
     .agenda-parallel-grid .agenda-item--parallel {
         flex: 0 0 82vw;
         max-width: 82vw;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;  /* center content inside the tall card */
     }
 
     .agenda-parallel-dots {
         display: flex;
         justify-content: center;
         gap: 8px;
-        margin-top: 16px;
+        margin-top: 18px;
         flex-shrink: 0;
     }
 }
