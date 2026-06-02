@@ -2887,10 +2887,9 @@ ul {
         padding: 0;
     }
 
-    /* Full-height pin (like the sponsors/people reels) so the slide finishes
-       exactly as the pin releases — no empty "scroll into the void" at the
-       bottom. Content is anchored near the top with a small padding so it
-       isn't jammed against the navbar and isn't floating mid-screen. */
+    /* Full-height pin. The cards GROW to fill the viewport (full-bleed slide
+       style) so there's no empty void below them — label sits at the top with
+       a small padding, the cards fill the middle, dots anchor at the bottom. */
     .agenda-parallel-sticky {
         position: sticky;
         top: 0;
@@ -2898,23 +2897,25 @@ ul {
         height: 100dvh;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
         overflow: hidden;
-        padding: 88px 0 0;
+        padding: 84px 0 22px;
     }
 
     .agenda-parallel-label {
         margin: 0 auto 14px;     /* centered above the reel */
+        flex-shrink: 0;
     }
 
     .agenda-parallel-grid {
+        flex: 1 1 auto;          /* fill the viewport — kills the empty void */
+        min-height: 0;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         gap: 14px;
         grid-template-columns: none;
         will-change: transform;
-        align-items: stretch;
+        align-items: stretch;     /* each card fills the track height */
         /* Break out of container padding so cards travel past the edges */
         margin: 0 calc(-1 * var(--container-pad));
         padding: 0 var(--container-pad);
@@ -2923,13 +2924,17 @@ ul {
     .agenda-parallel-grid .agenda-item--parallel {
         flex: 0 0 82vw;
         max-width: 82vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;  /* center content inside the tall card */
     }
 
     .agenda-parallel-dots {
         display: flex;
         justify-content: center;
         gap: 8px;
-        margin-top: 18px;
+        margin-top: 16px;
+        flex-shrink: 0;
     }
 }
 
