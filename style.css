@@ -1798,12 +1798,41 @@ ul {
     margin-right: auto;
 }
 
-.curators-grid {
+/* All six people share one container. On desktop it's a 12-col grid:
+   the two curators span 6 (2 per row), the four attendees span 3 (4 per
+   row). On mobile it becomes a horizontal scroll-jack reel (see the
+   max-width:768px block). */
+.room-people {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     gap: 24px;
     margin-top: 48px;
 }
+
+.room-people > .curator-card { grid-column: span 6; }
+.room-people > .attendee-card { grid-column: span 3; }
+
+/* Dot nav — mobile only */
+.room-dots { display: none; }
+
+.room-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.room-dot.is-active {
+    background: var(--color-primary);
+    transform: scale(1.35);
+}
+
+.room-dot:hover { background: rgba(255, 255, 255, 0.5); }
+.room-dot.is-active:hover { background: var(--color-primary); }
 
 .curator-card {
     background: var(--color-surface);
@@ -1975,13 +2004,6 @@ ul {
 }
 
 /* ---------- ATTENDEE CARDS ---------- */
-.attendees-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 24px;
-}
-
 .attendee-card {
     position: relative;
     display: flex;
@@ -3080,7 +3102,7 @@ ul {
     .hero-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
     .tickets-grid { grid-template-columns: repeat(2, 1fr); }
     .sponsors-grid { grid-template-columns: repeat(2, 1fr); }
-    .attendees-grid { grid-template-columns: repeat(2, 1fr); }
+    .room-people > .attendee-card { grid-column: span 6; } /* 2 per row */
     .footer-grid { grid-template-columns: 1fr 1fr; }
 
     /* Timeline — slightly tighter on tablets */
@@ -3202,7 +3224,7 @@ ul {
     .partners-grid { grid-template-columns: 1fr; gap: 32px; }
     .partners-cta { padding-right: 0; border-right: none; border-bottom: 1px solid var(--color-border); padding-bottom: 24px; text-align: center; }
 
-    .curators-grid { grid-template-columns: 1fr; }
+    .room-people > .curator-card { grid-column: span 12; } /* 1 per row */
 }
 
 /* =========================================================
@@ -3499,6 +3521,84 @@ ul {
         margin-top: 18px;
         font-size: 13.5px;
         padding: 0 8px;
+    }
+
+    /* =========================================================
+       PEOPLE IN THE ROOM — sticky horizontal scroll on phones.
+       Same scrolly-telling pattern as the sponsors reel: the section
+       grows tall, .container pins to the viewport, and JS translates
+       .room-people horizontally as the page scrolls through it. All six
+       people (2 curators + 4 attendees) ride one track.
+       ========================================================= */
+    .curators-section {
+        height: 360vh;                 /* long runway for 6 cards */
+        content-visibility: visible;   /* required — auto breaks sticky */
+        padding: 0;
+    }
+
+    .curators-section > .container {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        padding-top: 72px;
+        padding-bottom: 16px;
+    }
+
+    /* Tighten the heading so the pinned column fits the tallest card */
+    .curators-section > .container > .eyebrow { margin-bottom: 6px; }
+    .curators-section > .container > .section-title { margin-bottom: 8px; }
+    .curators-section > .container > .section-lead {
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+
+    .room-people {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 16px;
+        overflow: visible;
+        will-change: transform;
+        max-width: none;
+        /* Break out of container padding so cards travel past the edges */
+        margin: 18px calc(-1 * var(--container-pad)) 0;
+        padding: 0 var(--container-pad);
+        align-items: center;
+    }
+
+    .room-people > .curator-card,
+    .room-people > .attendee-card {
+        flex: 0 0 82vw;
+        max-width: 82vw;
+        margin: 0;
+    }
+
+    /* Compact the curator cards in the reel so they don't blow past the
+       pin height — smaller avatar + clamp the bio to 3 lines. */
+    .room-people > .curator-card {
+        padding: 24px 20px;
+        gap: 10px;
+    }
+    .room-people > .curator-card .curator-photo-wrap { width: 104px; }
+    .room-people > .curator-card .curator-bio {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 13px;
+        max-width: 100%;
+    }
+
+    .room-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 18px;
     }
 
     /* ----- Partners strip ----- */

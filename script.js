@@ -287,6 +287,79 @@
         updateSponsorsSticky();
     }
 
+    // ---------- PEOPLE IN THE ROOM: STICKY HORIZONTAL SCROLL (mobile) ----------
+    // Same scrolly-telling pattern as the sponsors reel. The curators
+    // section is 360vh on phones with its .container pinned; JS maps page
+    // scroll progress to a horizontal translate of the .room-people track
+    // so all six people slide in from the right before the page moves on.
+    var roomSection = document.getElementById("curators");
+    var roomTrack = document.getElementById("roomPeople");
+    var roomDots = document.querySelectorAll(".room-dot");
+
+    if (roomSection && roomTrack && roomDots.length) {
+        var roomCards = roomTrack.children;
+        var roomMobileQuery = window.matchMedia("(max-width: 768px)");
+        var roomTicking = false;
+
+        function roomIsMobile() { return roomMobileQuery.matches; }
+
+        function updateRoomSticky() {
+            if (!roomIsMobile()) {
+                roomTrack.style.transform = "";
+                return;
+            }
+
+            var rect = roomSection.getBoundingClientRect();
+            var sectionHeight = roomSection.offsetHeight;
+            var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            var scrollableHeight = sectionHeight - viewportHeight;
+            if (scrollableHeight <= 0) return;
+
+            var scrolled = -rect.top;
+            var progress = scrolled / scrollableHeight;
+            if (progress < 0) progress = 0;
+            else if (progress > 1) progress = 1;
+
+            var trackWidth = roomTrack.scrollWidth;
+            var visibleWidth = roomTrack.parentElement
+                ? roomTrack.parentElement.clientWidth
+                : window.innerWidth;
+            var maxTranslate = Math.max(0, trackWidth - visibleWidth);
+            roomTrack.style.transform =
+                "translate3d(" + (-progress * maxTranslate).toFixed(2) + "px, 0, 0)";
+
+            var activeIndex = Math.round(progress * (roomCards.length - 1));
+            roomDots.forEach(function (dot, idx) {
+                dot.classList.toggle("is-active", idx === activeIndex);
+            });
+        }
+
+        roomDots.forEach(function (dot, index) {
+            dot.addEventListener("click", function () {
+                if (!roomIsMobile()) return;
+                if (!roomCards.length) return;
+                var targetProgress = index / (roomCards.length - 1);
+                var sectionTop = roomSection.getBoundingClientRect().top + window.scrollY;
+                var sectionHeight = roomSection.offsetHeight;
+                var viewportHeight = window.innerHeight;
+                var targetY = sectionTop + targetProgress * (sectionHeight - viewportHeight);
+                window.scrollTo({ top: targetY, behavior: "smooth" });
+            });
+        });
+
+        window.addEventListener("scroll", function () {
+            if (roomTicking) return;
+            roomTicking = true;
+            requestAnimationFrame(function () {
+                updateRoomSticky();
+                roomTicking = false;
+            });
+        }, { passive: true });
+
+        window.addEventListener("resize", updateRoomSticky);
+        updateRoomSticky();
+    }
+
     // ---------- TIMELINE: ACTIVE NUMBER ON SCROLL ----------
     // When a timeline item's center crosses a "reading zone" near the top
     // of the viewport, mark it active so its number turns white.
