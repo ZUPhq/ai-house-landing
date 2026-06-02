@@ -2883,24 +2883,24 @@ ul {
     .agenda-section { content-visibility: visible; } /* keep sticky working */
 
     .agenda-parallel {
-        height: 175vh;
+        height: 130vh;          /* shorter runway → less dead scroll */
         padding: 0;
     }
 
+    /* Compact pin: the block sticks just under the navbar at its own content
+       height (not full-screen), so it stays tucked right against the program
+       above instead of floating in a centered, half-empty viewport. */
     .agenda-parallel-sticky {
         position: sticky;
-        top: 0;
-        height: 100vh;
-        height: 100dvh;
+        top: 72px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         overflow: hidden;
-        padding: 64px 0 16px;
+        padding: 0;
     }
 
     .agenda-parallel-label {
-        margin: 0 auto 16px;     /* centered above the reel */
+        margin: 0 auto 14px;     /* centered above the reel */
     }
 
     .agenda-parallel-grid {
