@@ -114,6 +114,7 @@ section,
 .about-section,
 .curators-section,
 .sponsors-section,
+.agenda-section,
 .tickets-section,
 .partners-strip,
 .partner-section,
@@ -2276,6 +2277,355 @@ ul {
 }
 
 /* =========================================================
+   AGENDA SECTION — Day 1 / Day 2 switcher + timeline
+   ========================================================= */
+.agenda-section {
+    padding: var(--section-pad) 0;
+}
+
+/* ---------- Day switcher ---------- */
+.agenda-switch {
+    display: inline-flex;
+    gap: 6px;
+    margin: 36px auto 0;
+    padding: 6px;
+    border-radius: 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    /* Center the inline-flex pill group */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.agenda-switch-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 130px;
+    padding: 12px 28px;
+    border: 0;
+    border-radius: 11px;
+    background: transparent;
+    color: var(--color-muted);
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.agenda-switch-day {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.agenda-switch-date {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.agenda-switch-btn:hover {
+    color: var(--color-text);
+}
+
+.agenda-switch-btn.is-active {
+    background: var(--color-primary);
+    color: #000000;
+    box-shadow: 0 6px 18px rgba(3, 215, 119, 0.30);
+}
+
+.agenda-switch-btn.is-active .agenda-switch-date {
+    opacity: 0.85;
+}
+
+/* ---------- Day panel ---------- */
+.agenda-day {
+    max-width: 760px;
+    margin: 44px auto 0;
+}
+
+.agenda-day[hidden] {
+    display: none;
+}
+
+/* Fade+rise when a day becomes active (JS removes [hidden] then the
+   panel animates in). */
+.agenda-day.is-active {
+    animation: agenda-day-in 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+@keyframes agenda-day-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Day theme header ---------- */
+.agenda-day-head {
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    border-radius: 18px;
+    background:
+        linear-gradient(135deg,
+            rgba(3, 215, 119, 0.10) 0%,
+            rgba(3, 190, 215, 0.06) 100%);
+    border: 1px solid var(--color-border-strong);
+}
+
+.agenda-theme-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.agenda-theme-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+}
+
+.agenda-theme-desc {
+    color: var(--color-muted);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ---------- Timeline list ---------- */
+.agenda-list {
+    position: relative;
+}
+
+.agenda-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 24px;
+    padding: 0 0 28px 0;
+}
+
+/* Vertical rail: a line down the left edge of the content column, with a
+   dot at each item. Drawn on .agenda-content so it spans the full height. */
+.agenda-content {
+    position: relative;
+    padding: 0 0 4px 28px;
+    border-left: 2px solid var(--color-border);
+}
+
+.agenda-content::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(3, 215, 119, 0.15);
+}
+
+/* Last item: stop the rail line right at the dot so it doesn't dangle. */
+.agenda-list > .agenda-item:last-child .agenda-content,
+.agenda-parallel:last-child .agenda-item .agenda-content {
+    border-left-color: transparent;
+}
+
+.agenda-time {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: 0.2px;
+    padding-top: 1px;
+    white-space: nowrap;
+}
+
+.agenda-title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.agenda-desc {
+    color: var(--color-muted);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 8px 0 0;
+}
+
+/* Named speaker(s) byline — green, light */
+.agenda-byline {
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 8px 0 0;
+}
+
+.agenda-byline-org {
+    color: var(--color-muted);
+    font-weight: 400;
+}
+
+/* Speaker role chips */
+.agenda-speakers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+}
+
+.agenda-speakers li {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-muted);
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+}
+
+/* Small tag above a title (Workshop #1, Experience Partner moment) */
+.agenda-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--color-light-blue);
+    margin-bottom: 8px;
+}
+
+/* ---------- Break / light rows ---------- */
+.agenda-item--break .agenda-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-dim);
+}
+
+.agenda-item--break .agenda-content::before {
+    background: transparent;
+    border: 2px solid var(--color-border);
+    box-shadow: none;
+    left: -6px;
+}
+
+.agenda-item--break .agenda-time {
+    color: var(--color-dim);
+    font-weight: 500;
+}
+
+/* ---------- Feature rows (BBQ, Party) ---------- */
+.agenda-item--feature .agenda-content {
+    border-left-color: var(--color-primary);
+}
+
+.agenda-item--feature .agenda-title {
+    font-size: 19px;
+}
+
+/* ---------- Parallel sessions ---------- */
+.agenda-parallel {
+    position: relative;
+    padding: 0 0 28px 0;
+}
+
+.agenda-parallel-label {
+    display: inline-block;
+    margin: 0 0 14px 112px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--color-light-blue);
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px dashed rgba(3, 190, 215, 0.4);
+}
+
+.agenda-parallel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Inside the parallel grid, items become self-contained cards (no shared
+   time column — the time sits inside each card). */
+.agenda-parallel-grid .agenda-item--parallel {
+    display: block;
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+}
+
+.agenda-parallel-grid .agenda-item--parallel .agenda-time {
+    text-align: left;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.agenda-parallel-grid .agenda-item--parallel .agenda-content {
+    padding: 0;
+    border-left: 0;
+}
+
+.agenda-parallel-grid .agenda-item--parallel .agenda-content::before {
+    display: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 620px) {
+    .agenda-switch-btn {
+        min-width: 110px;
+        padding: 10px 18px;
+    }
+
+    .agenda-item {
+        grid-template-columns: 64px 1fr;
+        gap: 14px;
+    }
+
+    .agenda-time {
+        font-size: 12px;
+    }
+
+    .agenda-content {
+        padding-left: 20px;
+    }
+
+    .agenda-day-head {
+        padding: 20px;
+    }
+
+    .agenda-parallel-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agenda-parallel-label {
+        margin-left: 78px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .agenda-day.is-active { animation: none; }
+}
+
+/* =========================================================
    PARTNER SECTION
    ========================================================= */
 .partner-section {
@@ -2612,6 +2962,7 @@ ul {
     .site-header.is-open .primary-nav .nav-list li:nth-child(3) { animation-delay: 0.22s; }
     .site-header.is-open .primary-nav .nav-list li:nth-child(4) { animation-delay: 0.28s; }
     .site-header.is-open .primary-nav .nav-list li:nth-child(5) { animation-delay: 0.34s; }
+    .site-header.is-open .primary-nav .nav-list li:nth-child(6) { animation-delay: 0.40s; }
 
     @keyframes mobile-nav-item-in {
         to { opacity: 1; transform: translateY(0); }

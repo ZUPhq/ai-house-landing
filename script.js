@@ -386,6 +386,30 @@
         });
     });
 
+    // ---------- AGENDA DAY SWITCHER ----------
+    // Tabs toggle which day panel is visible. Pure show/hide, no routing.
+    var agendaTabs = document.querySelectorAll("[data-agenda-day]");
+    var agendaPanels = document.querySelectorAll("[data-agenda-panel]");
+    if (agendaTabs.length && agendaPanels.length) {
+        agendaTabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+                var day = tab.getAttribute("data-agenda-day");
+
+                agendaTabs.forEach(function (t) {
+                    var active = t === tab;
+                    t.classList.toggle("is-active", active);
+                    t.setAttribute("aria-selected", active ? "true" : "false");
+                });
+
+                agendaPanels.forEach(function (panel) {
+                    var match = panel.getAttribute("data-agenda-panel") === day;
+                    panel.hidden = !match;
+                    panel.classList.toggle("is-active", match);
+                });
+            });
+        });
+    }
+
     // ---------- PARTNER MODAL ----------
     // Two-step modal: choice screen → form. Opened by [data-partner-open],
     // closed by [data-partner-close] or ESC / backdrop click.

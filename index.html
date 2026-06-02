@@ -82,6 +82,7 @@
                     <li><a href="#sponsors">Sponsors</a></li>
                     <li><a href="#curators">Curators</a></li>
                     <li><a href="#expect">What to expect</a></li>
+                    <li><a href="#agenda">Agenda</a></li>
                     <li><a href="#tickets">Tickets</a></li>
                 </ul>
             </nav>
@@ -469,6 +470,240 @@
     </section>
 
     <!-- ============================================
+         AGENDA — Day 1 / Day 2 switcher + timeline
+    ============================================= -->
+    <section class="agenda-section fade-in" id="agenda">
+        <div class="container">
+            <p class="eyebrow eyebrow-center">Agenda</p>
+            <h2 class="section-title section-title-center">Two days, <span class="text-glow">mapped</span> out.</h2>
+            <p class="section-lead section-lead-center">
+                From big-picture debate to hands-on workshops. Here's how the weekend unfolds —
+                times are indicative and may shift slightly on the day.
+            </p>
+
+            <!-- Day switcher -->
+            <div class="agenda-switch" role="tablist" aria-label="Choose a day">
+                <button class="agenda-switch-btn is-active" role="tab" aria-selected="true" data-agenda-day="1" id="agenda-tab-1" aria-controls="agenda-day-1">
+                    <span class="agenda-switch-day">Day 1</span>
+                    <span class="agenda-switch-date">June 19</span>
+                </button>
+                <button class="agenda-switch-btn" role="tab" aria-selected="false" data-agenda-day="2" id="agenda-tab-2" aria-controls="agenda-day-2">
+                    <span class="agenda-switch-day">Day 2</span>
+                    <span class="agenda-switch-date">June 20</span>
+                </button>
+            </div>
+
+            <!-- ===== DAY 1 ===== -->
+            <div class="agenda-day is-active" role="tabpanel" id="agenda-day-1" aria-labelledby="agenda-tab-1" data-agenda-panel="1">
+                <div class="agenda-day-head">
+                    <span class="agenda-theme-label">Theme</span>
+                    <h3 class="agenda-theme-title">Big Picture vs. Ground Level</h3>
+                    <p class="agenda-theme-desc">
+                        Day 1 moves between two altitudes: the macro debate about where AI is taking us,
+                        and the ground-level reality of what is actually being built. The content experience
+                        is personalized based on participant inputs on the Welcome Boards.
+                    </p>
+                </div>
+
+                <div class="agenda-list">
+                    <article class="agenda-item">
+                        <div class="agenda-time">4:00 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Arrival &amp; Boards completion</h4>
+                            <p class="agenda-desc">Discussing the debate topics placed on the debate boards and participants' opinions, in a debate-like fashion.</p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">4:30 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Welcome Note</h4>
+                            <p class="agenda-byline">Andrei Ilie</p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">5:00 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Panel Debate: The Big Picture of AI</h4>
+                            <p class="agenda-desc">Discussing the debate topics placed on the physical debate boards and participants' opinions, in a debate-like fashion.</p>
+                            <ul class="agenda-speakers">
+                                <li>AI Entrepreneur</li>
+                                <li>AI Consultant</li>
+                                <li>AI Researcher</li>
+                                <li>Moderator</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item agenda-item--break">
+                        <div class="agenda-time">5:45 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Break</h4>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">6:00 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">HotSeat: The Ground Level of AI</h4>
+                            <p class="agenda-desc">Five pre-selected builders take the seat, each from a different corner of the AI landscape. After a session of big-picture debate, this lands the conversation at ground level: what is actually being built, by whom, for whom, and at what cost.</p>
+                            <ul class="agenda-speakers">
+                                <li>AI Builder B2B</li>
+                                <li>AI Builder B2C</li>
+                                <li>AI Consultant</li>
+                                <li>AI Researcher</li>
+                                <li>Infrastructure Provider</li>
+                                <li>Moderator</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item agenda-item--feature">
+                        <div class="agenda-time">7:00 PM</div>
+                        <div class="agenda-content">
+                            <span class="agenda-tag">Experience Partner moment</span>
+                            <h4 class="agenda-title">BBQ Evening</h4>
+                            <p class="agenda-desc">Relaxed dinner, drinks, low-key music, DJ sets. This is where the real conversations happen. Partner branding integrated naturally into the setup. The best connections of the weekend tend to happen here.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- ===== DAY 2 ===== -->
+            <div class="agenda-day" role="tabpanel" id="agenda-day-2" aria-labelledby="agenda-tab-2" data-agenda-panel="2" hidden>
+                <div class="agenda-day-head">
+                    <span class="agenda-theme-label">Theme</span>
+                    <h3 class="agenda-theme-title">Deep-dive</h3>
+                    <p class="agenda-theme-desc">
+                        Moving from overviews to practical topics — keynotes, hands-on workshops, and
+                        structured think-tank sessions that turn ideas into tangible output.
+                    </p>
+                </div>
+
+                <div class="agenda-list">
+                    <article class="agenda-item agenda-item--break">
+                        <div class="agenda-time">10:00 AM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Arrival &amp; Morning Coffee</h4>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">10:30 AM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Keynote: AI is not replacing, but repositioning people</h4>
+                            <p class="agenda-byline">Alex Gavril</p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">11:00 AM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">From AI Demos to AI Employees: What Actually Breaks</h4>
+                            <p class="agenda-byline">Emil Muthu <span class="agenda-byline-org">· Neurony</span></p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item agenda-item--break">
+                        <div class="agenda-time">11:45 AM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Break</h4>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">12:00 PM</div>
+                        <div class="agenda-content">
+                            <span class="agenda-tag">Workshop #1</span>
+                            <h4 class="agenda-title">AI in GTM</h4>
+                            <p class="agenda-desc">Hands-on session led by the Instantly.ai team on leveraging AI across the go-to-market stack — outbound to pipeline to closing. Small groups work on real GTM challenges using Instantly's tools and frameworks. Builders leave with something tangible.</p>
+                            <p class="agenda-byline">Instantly Rep</p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item agenda-item--break">
+                        <div class="agenda-time">1:45 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Lunch Break &amp; Unwind</h4>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">3:00 PM</div>
+                        <div class="agenda-content">
+                            <span class="agenda-tag">Workshop #2</span>
+                            <h4 class="agenda-title">Topic TBD</h4>
+                            <p class="agenda-desc">Hands-on session co-designed with the ElevenLabs team to ensure relevance to the room's specific composition and interests.</p>
+                            <p class="agenda-byline">ElevenLabs Rep</p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item agenda-item--break">
+                        <div class="agenda-time">4:30 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Break</h4>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">5:00 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">The AI Think Tank</h4>
+                            <p class="agenda-desc">Attendees split into 3–4 small groups (8–12 per table), each anchored around a live question. Two tracks are seeded directly from the Day 1 debate groups — those conversations continue with new depth and new participants. Each table produces a 3-point synthesis shared back to the full room. No slides, no presentations. Just thinking out loud with the right people.</p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item agenda-item--break">
+                        <div class="agenda-time">6:15 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Dinner &amp; Decompress</h4>
+                        </div>
+                    </article>
+
+                    <!-- Two parallel 7:00 PM tracks -->
+                    <div class="agenda-parallel">
+                        <span class="agenda-parallel-label">Running in parallel</span>
+                        <div class="agenda-parallel-grid">
+                            <article class="agenda-item agenda-item--parallel">
+                                <div class="agenda-time">7:00 PM</div>
+                                <div class="agenda-content">
+                                    <h4 class="agenda-title">Matching Moment</h4>
+                                    <p class="agenda-desc">Each attendee writes one specific ask on a card. Cards are matched across the room by the organizer team. Direct, high-value introductions — this works because Day 1 built the trust. Focus areas: partnerships, key hires, customers, investors, pilots.</p>
+                                </div>
+                            </article>
+
+                            <article class="agenda-item agenda-item--parallel">
+                                <div class="agenda-time">7:00 PM</div>
+                                <div class="agenda-content">
+                                    <h4 class="agenda-title">Social Arrival</h4>
+                                    <p class="agenda-desc">The evening crowd starts arriving. Welcome drinks, atmosphere builds. Core attendees act as hosts — they carry the energy and make the introductions. The 50 are the gravitational centre of the room tonight.</p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <article class="agenda-item">
+                        <div class="agenda-time">8:00 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Opening Toast</h4>
+                            <p class="agenda-byline">Sandra, Alex &amp; Andrei</p>
+                        </div>
+                    </article>
+
+                    <article class="agenda-item agenda-item--feature">
+                        <div class="agenda-time">8:15 PM</div>
+                        <div class="agenda-content">
+                            <h4 class="agenda-title">Party</h4>
+                            <p class="agenda-desc">Full evening with the extended network. DJ sets, drinks, good energy. Content capture throughout: photos, short clips. Partner branding at the DJ booth and bar areas.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
          TICKETS
     ============================================= -->
     <section class="tickets-section fade-in" id="tickets">
@@ -642,6 +877,7 @@
                     <li><a href="#sponsors">Sponsors</a></li>
                     <li><a href="#curators">Curators</a></li>
                     <li><a href="#expect">What to expect</a></li>
+                    <li><a href="#agenda">Agenda</a></li>
                     <li><a href="#tickets">Tickets</a></li>
                 </ul>
             </div>
