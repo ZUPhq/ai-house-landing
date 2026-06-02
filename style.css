@@ -2887,12 +2887,10 @@ ul {
         padding: 0;
     }
 
-    /* Compact horizontal swipe carousel on phones — no full-screen pin, so
-       the block is only as tall as a card (~card height), with no empty
-       viewport above/below. Swipe sideways; dots track the position. */
+    /* On phones the two parallel events simply stack, one below the other. */
     .agenda-parallel {
         height: auto;
-        padding: 0 0 8px;
+        padding: 0 0 28px;
     }
 
     .agenda-parallel-sticky {
@@ -2905,38 +2903,25 @@ ul {
     }
 
     .agenda-parallel-label {
-        margin: 0 0 14px;
+        margin: 0 0 16px;
     }
 
     .agenda-parallel-grid {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+        display: grid;
+        grid-template-columns: 1fr;
         gap: 14px;
-        grid-template-columns: none;
         text-align: left;
-        align-items: stretch;     /* both cards equal height */
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        /* Break out of container padding so cards sit edge-to-edge */
-        margin: 0 calc(-1 * var(--container-pad));
-        padding: 0 var(--container-pad);
+        margin: 0;
+        padding: 0;
+        overflow: visible;
     }
-    .agenda-parallel-grid::-webkit-scrollbar { display: none; }
 
     .agenda-parallel-grid .agenda-item--parallel {
-        flex: 0 0 82vw;
-        max-width: 82vw;
-        scroll-snap-align: center;
+        max-width: none;
     }
 
     .agenda-parallel-dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 16px;
+        display: none;            /* not needed when stacked */
     }
 }
 
