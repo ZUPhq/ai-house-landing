@@ -2883,20 +2883,24 @@ ul {
     .agenda-section { content-visibility: visible; } /* keep sticky working */
 
     .agenda-parallel {
-        height: 130vh;          /* shorter runway → less dead scroll */
+        height: 150vh;
         padding: 0;
     }
 
-    /* Compact pin: the block sticks just under the navbar at its own content
-       height (not full-screen), so it stays tucked right against the program
-       above instead of floating in a centered, half-empty viewport. */
+    /* Full-height pin (like the sponsors/people reels) so the slide finishes
+       exactly as the pin releases — no empty "scroll into the void" at the
+       bottom. Content is anchored near the top with a small padding so it
+       isn't jammed against the navbar and isn't floating mid-screen. */
     .agenda-parallel-sticky {
         position: sticky;
-        top: 72px;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
         overflow: hidden;
-        padding: 0;
+        padding: 88px 0 0;
     }
 
     .agenda-parallel-label {
