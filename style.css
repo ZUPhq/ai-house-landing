@@ -2025,25 +2025,26 @@ ul {
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* White chip so logos with dark/black text read on the dark card */
+/* No background — logos render white directly on the dark card, same as
+   the curator logos (Instantly / promocrat). Fixed container height keeps
+   every logo the same height regardless of its native colors/ratio. */
 .attendee-logo-chip {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 34px;
-    padding: 0 14px;
-    background: #FFFFFF;
-    border-radius: 9px;
+    height: 24px;
     margin-bottom: 16px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .attendee-logo-img {
-    max-height: 20px;
-    max-width: 110px;
+    max-height: 22px;
+    max-width: 100%;       /* never overflow the card on narrow screens */
     width: auto;
     object-fit: contain;
     display: block;
+    /* Flip every logo to solid white so they read on the dark surface */
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
 }
 
 .attendee-name {
