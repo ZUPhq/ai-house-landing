@@ -751,24 +751,35 @@
                     </article>
 
                     <!-- Two parallel 7:00 PM tracks -->
-                    <div class="agenda-parallel">
-                        <span class="agenda-parallel-label">Running in parallel</span>
-                        <div class="agenda-parallel-grid">
-                            <article class="agenda-item agenda-item--parallel">
-                                <div class="agenda-time">7:00 PM</div>
-                                <div class="agenda-content">
-                                    <h4 class="agenda-title">Matching Moment</h4>
-                                    <p class="agenda-desc">Each attendee writes one specific ask on a card. Cards are matched across the room by the organizer team. Direct, high-value introductions — this works because Day 1 built the trust. Focus areas: partnerships, key hires, customers, investors, pilots.</p>
-                                </div>
-                            </article>
+                    <div class="agenda-parallel" id="agendaParallel">
+                        <!-- On phones this inner block pins and the two cards
+                             slide horizontally on scroll (same reel pattern as
+                             the people/sponsors sections). Desktop = side by side. -->
+                        <div class="agenda-parallel-sticky">
+                            <span class="agenda-parallel-label">Running in parallel</span>
+                            <div class="agenda-parallel-grid" id="agendaParallelTrack">
+                                <article class="agenda-item agenda-item--parallel">
+                                    <div class="agenda-time">7:00 PM</div>
+                                    <div class="agenda-content">
+                                        <h4 class="agenda-title">Matching Moment</h4>
+                                        <p class="agenda-desc">Each attendee writes one specific ask on a card. Cards are matched across the room by the organizer team. Direct, high-value introductions — this works because Day 1 built the trust. Focus areas: partnerships, key hires, customers, investors, pilots.</p>
+                                    </div>
+                                </article>
 
-                            <article class="agenda-item agenda-item--parallel">
-                                <div class="agenda-time">7:00 PM</div>
-                                <div class="agenda-content">
-                                    <h4 class="agenda-title">Social Arrival</h4>
-                                    <p class="agenda-desc">The evening crowd starts arriving. Welcome drinks, atmosphere builds. Core attendees act as hosts — they carry the energy and make the introductions. The 50 are the gravitational centre of the room tonight.</p>
-                                </div>
-                            </article>
+                                <article class="agenda-item agenda-item--parallel">
+                                    <div class="agenda-time">7:00 PM</div>
+                                    <div class="agenda-content">
+                                        <h4 class="agenda-title">Social Arrival</h4>
+                                        <p class="agenda-desc">The evening crowd starts arriving. Welcome drinks, atmosphere builds. Core attendees act as hosts — they carry the energy and make the introductions. The 50 are the gravitational centre of the room tonight.</p>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <!-- Mobile-only dot nav for the parallel reel -->
+                            <div class="agenda-parallel-dots" id="agendaParallelDots" aria-hidden="true">
+                                <button type="button" class="room-dot is-active" data-slide="0" aria-label="Parallel event 1"></button>
+                                <button type="button" class="room-dot" data-slide="1" aria-label="Parallel event 2"></button>
+                            </div>
                         </div>
                     </div>
 

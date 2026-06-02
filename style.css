@@ -2849,6 +2849,9 @@ ul {
     display: none;
 }
 
+/* Sticky wrapper is a no-op on desktop (plain block); dots hidden. */
+.agenda-parallel-dots { display: none; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 620px) {
     .agenda-switch-btn {
@@ -2873,12 +2876,56 @@ ul {
         padding: 20px;
     }
 
-    .agenda-parallel-grid {
-        grid-template-columns: 1fr;
+    /* ===== Parallel events → sticky horizontal scroll reel on phones =====
+       The .agenda-parallel block grows tall, its inner .agenda-parallel-sticky
+       pins to the viewport, and JS slides the two cards horizontally so you
+       see one, then scroll reveals the other from the right. */
+    .agenda-section { content-visibility: visible; } /* keep sticky working */
+
+    .agenda-parallel {
+        height: 175vh;
+        padding: 0;
+    }
+
+    .agenda-parallel-sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        padding: 64px 0 16px;
     }
 
     .agenda-parallel-label {
-        margin-left: 78px;
+        margin: 0 auto 16px;     /* centered above the reel */
+    }
+
+    .agenda-parallel-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 14px;
+        grid-template-columns: none;
+        will-change: transform;
+        align-items: stretch;
+        /* Break out of container padding so cards travel past the edges */
+        margin: 0 calc(-1 * var(--container-pad));
+        padding: 0 var(--container-pad);
+    }
+
+    .agenda-parallel-grid .agenda-item--parallel {
+        flex: 0 0 82vw;
+        max-width: 82vw;
+    }
+
+    .agenda-parallel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 18px;
     }
 }
 
@@ -3639,16 +3686,19 @@ ul {
         overflow: hidden;
     }
 
-    /* Compact the curator cards in the reel so they don't blow past the
-       pin height — smaller avatar + clamp the bio to 3 lines. */
+    /* Curator cards share the exact same fixed height as the attendee cards
+       so all six in the reel sit at one level. Smaller avatar + clamped bio
+       keep the content within the box. */
     .room-people > .curator-card {
+        height: 430px;
+        justify-content: center;
         padding: 24px 20px;
         gap: 10px;
     }
     .room-people > .curator-card .curator-photo-wrap { width: 104px; }
     .room-people > .curator-card .curator-bio {
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         overflow: hidden;
         font-size: 13px;

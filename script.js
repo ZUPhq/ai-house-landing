@@ -360,6 +360,77 @@
         updateRoomSticky();
     }
 
+    // ---------- AGENDA PARALLEL EVENTS: STICKY HORIZONTAL SCROLL (mobile) ----------
+    // The two 7:00 PM Day-2 events share one reel on phones: one shows,
+    // scrolling slides the other in from the right. Same pattern as above.
+    var apSection = document.getElementById("agendaParallel");
+    var apTrack = document.getElementById("agendaParallelTrack");
+    var apDots = document.querySelectorAll("#agendaParallelDots .room-dot");
+
+    if (apSection && apTrack && apDots.length) {
+        var apCards = apTrack.children;
+        var apMobileQuery = window.matchMedia("(max-width: 620px)");
+        var apTicking = false;
+
+        function apIsMobile() { return apMobileQuery.matches; }
+
+        function updateAgendaParallel() {
+            if (!apIsMobile()) {
+                apTrack.style.transform = "";
+                return;
+            }
+
+            var rect = apSection.getBoundingClientRect();
+            var sectionHeight = apSection.offsetHeight;
+            var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            var scrollableHeight = sectionHeight - viewportHeight;
+            if (scrollableHeight <= 0) return;
+
+            var scrolled = -rect.top;
+            var progress = scrolled / scrollableHeight;
+            if (progress < 0) progress = 0;
+            else if (progress > 1) progress = 1;
+
+            var trackWidth = apTrack.scrollWidth;
+            var visibleWidth = apTrack.parentElement
+                ? apTrack.parentElement.clientWidth
+                : window.innerWidth;
+            var maxTranslate = Math.max(0, trackWidth - visibleWidth);
+            apTrack.style.transform =
+                "translate3d(" + (-progress * maxTranslate).toFixed(2) + "px, 0, 0)";
+
+            var activeIndex = Math.round(progress * (apCards.length - 1));
+            apDots.forEach(function (dot, idx) {
+                dot.classList.toggle("is-active", idx === activeIndex);
+            });
+        }
+
+        apDots.forEach(function (dot, index) {
+            dot.addEventListener("click", function () {
+                if (!apIsMobile()) return;
+                if (!apCards.length) return;
+                var targetProgress = index / (apCards.length - 1);
+                var sectionTop = apSection.getBoundingClientRect().top + window.scrollY;
+                var sectionHeight = apSection.offsetHeight;
+                var viewportHeight = window.innerHeight;
+                var targetY = sectionTop + targetProgress * (sectionHeight - viewportHeight);
+                window.scrollTo({ top: targetY, behavior: "smooth" });
+            });
+        });
+
+        window.addEventListener("scroll", function () {
+            if (apTicking) return;
+            apTicking = true;
+            requestAnimationFrame(function () {
+                updateAgendaParallel();
+                apTicking = false;
+            });
+        }, { passive: true });
+
+        window.addEventListener("resize", updateAgendaParallel);
+        updateAgendaParallel();
+    }
+
     // ---------- TIMELINE: ACTIVE NUMBER ON SCROLL ----------
     // When a timeline item's center crosses a "reading zone" near the top
     // of the viewport, mark it active so its number turns white.
