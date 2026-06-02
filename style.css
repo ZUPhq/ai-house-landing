@@ -3578,6 +3578,20 @@ ul {
         margin: 0;
     }
 
+    /* The four attendee cards all share one fixed height so they read as a
+       uniform set — content vertically centered, role clamped so a longer
+       title (e.g. Matei's) doesn't make its card taller than the rest. */
+    .room-people > .attendee-card {
+        height: 340px;
+        justify-content: center;
+    }
+    .room-people > .attendee-card .attendee-role {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
     /* Compact the curator cards in the reel so they don't blow past the
        pin height — smaller avatar + clamp the bio to 3 lines. */
     .room-people > .curator-card {
