@@ -2213,13 +2213,13 @@ ul {
 .ticket-price {
     display: flex;
     align-items: baseline;
-    gap: 10px;
+    gap: 4px;
     margin-bottom: 4px;
     color: var(--color-primary);
 }
 
 /* Wraps currency + value so they stay tight against each other while the
-   "fără TVA" note can sit next to them with breathing space. */
+   "ex. VAT" note can hang as a superscript at the top-right. */
 .price-main {
     display: inline-flex;
     align-items: baseline;
@@ -2239,23 +2239,22 @@ ul {
     text-shadow: var(--glow);
 }
 
-/* "fără TVA" — sits to the right of the price, small uppercase label */
+/* "ex. VAT" — small superscript label hanging at the top-right of the
+   price, no box. align-self:flex-start lifts it to the price's cap height. */
 .price-vat-note {
+    align-self: flex-start;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     color: var(--color-muted);
-    padding: 4px 8px;
-    border: 1px solid rgba(3, 215, 119, 0.25);
-    border-radius: 6px;
-    background: rgba(3, 215, 119, 0.06);
 }
 
-/* Gross price below — smaller, muted, lets B2B buyers see the all-in cost */
+/* Gross price below — small, in brand green */
 .price-with-vat {
     font-size: 12px;
-    color: var(--color-dim);
+    font-weight: 500;
+    color: var(--color-primary);
     margin: 0 0 12px;
     letter-spacing: 0.2px;
 }
