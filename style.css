@@ -1953,6 +1953,150 @@ ul {
     font-weight: 300;
 }
 
+/* "Curated by" badge — pinned to the top-left corner of each curator card. */
+.curator-card {
+    position: relative;
+}
+
+.curator-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 3;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #000000;
+    background: var(--color-primary);
+    padding: 5px 12px;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(3, 215, 119, 0.30);
+}
+
+/* ---------- ATTENDEE CARDS ---------- */
+.attendees-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.attendee-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 28px 22px 24px;
+    background: var(--color-surface);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.attendee-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-3px);
+}
+
+.attendee-card:hover .attendee-photo {
+    transform: scale(1.04);
+}
+
+/* Circular headshot */
+.attendee-photo-wrap {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    margin-bottom: 16px;
+}
+
+.attendee-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* White chip so logos with dark/black text read on the dark card */
+.attendee-logo-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    padding: 0 14px;
+    background: #FFFFFF;
+    border-radius: 9px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.attendee-logo-img {
+    max-height: 20px;
+    max-width: 110px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.attendee-name {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+}
+
+.attendee-role {
+    color: var(--color-muted);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+/* LinkedIn pill — top-right, mirrors the curator card treatment */
+.attendee-linkedin {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 9px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: background-color 0.25s ease, border-color 0.25s ease,
+                color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    z-index: 3;
+}
+
+.attendee-linkedin svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+.attendee-linkedin:hover,
+.attendee-linkedin:focus-visible {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #000000;
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(3, 215, 119, 0.30);
+    outline: none;
+}
+
 /* Sponsors / Powered by */
 .sponsors-section {
     padding: var(--section-pad) 0;
@@ -2479,6 +2623,57 @@ ul {
     font-weight: 400;
 }
 
+/* Rich speaker chip — small round photo + name + company logo */
+.agenda-speaker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 5px 14px 5px 5px;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+}
+
+.agenda-speaker-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    flex-shrink: 0;
+}
+
+.agenda-speaker-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+}
+
+.agenda-speaker-logo {
+    display: inline-flex;
+    align-items: center;
+    height: 15px;
+    padding-left: 10px;
+    border-left: 1px solid var(--color-border);
+}
+
+.agenda-speaker-logo img {
+    max-height: 15px;
+    max-width: 88px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Logos with dark/black native colors → flip to white for the dark chip */
+.agenda-speaker-logo img.is-white {
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+}
+
 /* Speaker role chips */
 .agenda-speakers {
     display: flex;
@@ -2884,6 +3079,7 @@ ul {
     .hero-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
     .tickets-grid { grid-template-columns: repeat(2, 1fr); }
     .sponsors-grid { grid-template-columns: repeat(2, 1fr); }
+    .attendees-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-grid { grid-template-columns: 1fr 1fr; }
 
     /* Timeline — slightly tighter on tablets */
