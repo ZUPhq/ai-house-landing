@@ -2887,52 +2887,56 @@ ul {
         padding: 0;
     }
 
-    /* Full-height pin with the small reel centered. Cards keep their natural
-       (content) height — the centered group splits the leftover space evenly
-       top/bottom so it reads as an intentional slide, not a void. Full-height
-       pin keeps the slide timing exact (no dead scroll). */
+    /* Compact horizontal swipe carousel on phones — no full-screen pin, so
+       the block is only as tall as a card (~card height), with no empty
+       viewport above/below. Swipe sideways; dots track the position. */
+    .agenda-parallel {
+        height: auto;
+        padding: 0 0 8px;
+    }
+
     .agenda-parallel-sticky {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        height: 100dvh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        overflow: hidden;
-        padding: 76px 0 24px;
+        position: static;
+        display: block;
+        height: auto;
+        overflow: visible;
+        padding: 0;
+        text-align: center;       /* centers the inline-block label */
     }
 
     .agenda-parallel-label {
-        margin: 0 auto 16px;     /* centered above the reel */
-        flex-shrink: 0;
+        margin: 0 0 14px;
     }
 
     .agenda-parallel-grid {
-        flex: 0 0 auto;          /* natural height — smaller cards */
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         gap: 14px;
         grid-template-columns: none;
-        will-change: transform;
+        text-align: left;
         align-items: stretch;     /* both cards equal height */
-        /* Break out of container padding so cards travel past the edges */
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        /* Break out of container padding so cards sit edge-to-edge */
         margin: 0 calc(-1 * var(--container-pad));
         padding: 0 var(--container-pad);
     }
+    .agenda-parallel-grid::-webkit-scrollbar { display: none; }
 
     .agenda-parallel-grid .agenda-item--parallel {
         flex: 0 0 82vw;
         max-width: 82vw;
+        scroll-snap-align: center;
     }
 
     .agenda-parallel-dots {
         display: flex;
         justify-content: center;
         gap: 8px;
-        margin-top: 18px;
-        flex-shrink: 0;
+        margin-top: 16px;
     }
 }
 

@@ -360,75 +360,41 @@
         updateRoomSticky();
     }
 
-    // ---------- AGENDA PARALLEL EVENTS: STICKY HORIZONTAL SCROLL (mobile) ----------
-    // The two 7:00 PM Day-2 events share one reel on phones: one shows,
-    // scrolling slides the other in from the right. Same pattern as above.
-    var apSection = document.getElementById("agendaParallel");
+    // ---------- AGENDA PARALLEL EVENTS: swipe carousel (mobile) ----------
+    // The two 7:00 PM Day-2 events are a compact horizontal swipe carousel on
+    // phones (native scroll-snap) — no full-screen pin, so the block stays
+    // card-sized. JS only syncs the dots with scroll position + handles taps.
     var apTrack = document.getElementById("agendaParallelTrack");
     var apDots = document.querySelectorAll("#agendaParallelDots .room-dot");
 
-    if (apSection && apTrack && apDots.length) {
+    if (apTrack && apDots.length) {
         var apCards = apTrack.children;
-        var apMobileQuery = window.matchMedia("(max-width: 620px)");
         var apTicking = false;
 
-        function apIsMobile() { return apMobileQuery.matches; }
-
-        function updateAgendaParallel() {
-            if (!apIsMobile()) {
-                apTrack.style.transform = "";
-                return;
-            }
-
-            var rect = apSection.getBoundingClientRect();
-            var sectionHeight = apSection.offsetHeight;
-            var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-            var scrollableHeight = sectionHeight - viewportHeight;
-            if (scrollableHeight <= 0) return;
-
-            var scrolled = -rect.top;
-            var progress = scrolled / scrollableHeight;
-            if (progress < 0) progress = 0;
-            else if (progress > 1) progress = 1;
-
-            var trackWidth = apTrack.scrollWidth;
-            var visibleWidth = apTrack.parentElement
-                ? apTrack.parentElement.clientWidth
-                : window.innerWidth;
-            var maxTranslate = Math.max(0, trackWidth - visibleWidth);
-            apTrack.style.transform =
-                "translate3d(" + (-progress * maxTranslate).toFixed(2) + "px, 0, 0)";
-
-            var activeIndex = Math.round(progress * (apCards.length - 1));
-            apDots.forEach(function (dot, idx) {
-                dot.classList.toggle("is-active", idx === activeIndex);
-            });
+        function apStep() {
+            // Card width + the 14px flex gap = one snap stride.
+            return apCards.length ? apCards[0].offsetWidth + 14 : apTrack.clientWidth;
         }
 
-        apDots.forEach(function (dot, index) {
-            dot.addEventListener("click", function () {
-                if (!apIsMobile()) return;
-                if (!apCards.length) return;
-                var targetProgress = index / (apCards.length - 1);
-                var sectionTop = apSection.getBoundingClientRect().top + window.scrollY;
-                var sectionHeight = apSection.offsetHeight;
-                var viewportHeight = window.innerHeight;
-                var targetY = sectionTop + targetProgress * (sectionHeight - viewportHeight);
-                window.scrollTo({ top: targetY, behavior: "smooth" });
-            });
-        });
-
-        window.addEventListener("scroll", function () {
+        apTrack.addEventListener("scroll", function () {
             if (apTicking) return;
             apTicking = true;
             requestAnimationFrame(function () {
-                updateAgendaParallel();
+                var idx = Math.round(apTrack.scrollLeft / apStep());
+                if (idx < 0) idx = 0;
+                else if (idx > apCards.length - 1) idx = apCards.length - 1;
+                apDots.forEach(function (dot, i) {
+                    dot.classList.toggle("is-active", i === idx);
+                });
                 apTicking = false;
             });
         }, { passive: true });
 
-        window.addEventListener("resize", updateAgendaParallel);
-        updateAgendaParallel();
+        apDots.forEach(function (dot, index) {
+            dot.addEventListener("click", function () {
+                apTrack.scrollTo({ left: index * apStep(), behavior: "smooth" });
+            });
+        });
     }
 
     // ---------- TIMELINE: ACTIVE NUMBER ON SCROLL ----------
