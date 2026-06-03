@@ -9,21 +9,15 @@
     <meta property="og:description" content="Practitioner-led sessions, honest roundtables, private-villa networking. June 19-20, 2026, Otopeni.">
     <meta property="og:image" content="assets/ai-house-banner.jpg">
 
-    <!-- Favicon — promocrat triangle mark -->
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/favicon.png">
 
-    <!-- Google Fonts: Poppins (matches inspiration design) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Sync inline script: flip the .js flag on <html> BEFORE first paint.
-         CSS uses this flag to apply initial fade-in (opacity:0) state, so
-         JS-enabled browsers never see sections "flash" visible then hide.
-         JS-disabled browsers skip the flag, so content renders normally. -->
     <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -37,9 +31,7 @@
 
 -->
 
-    <!-- ============================================
-         ANIMATED AURORA BACKGROUND
-    ============================================= -->
+    <!-- ▲ ANIMATED AURORA BACKGROUND · made with ❤️ by ZUP! → contact@zup.digital -->
     <div class="aurora" aria-hidden="true">
         <div class="aurora-blob aurora-blob-1"></div>
         <div class="aurora-blob aurora-blob-2"></div>
@@ -49,14 +41,7 @@
         <div class="aurora-noise"></div>
     </div>
 
-    <!-- ============================================
-         SVG FILTERS — reusable, hidden
-         #liquid-glass: feDisplacementMap creates the real refraction effect
-         (lens-like bending of the backdrop) that is the defining trait of
-         Apple's Liquid Glass. Falls back gracefully on Safari (which ignores
-         url() in backdrop-filter) — the gradient/shadow layers still
-         produce a credible frosted-glass look.
-    ============================================= -->
+    <!-- ▲ SVG FILTERS (Liquid Glass) · made with ❤️ by ZUP! → contact@zup.digital -->
     <svg class="svg-defs" aria-hidden="true">
         <defs>
             <filter id="liquid-glass" x="0%" y="0%" width="100%" height="100%">
@@ -67,9 +52,7 @@
         </defs>
     </svg>
 
-    <!-- ============================================
-         NAVBAR
-    ============================================= -->
+    <!-- ▲ NAVBAR · made with ❤️ by ZUP! → contact@zup.digital -->
     <header class="site-header" id="site-header">
         <div class="container nav-container">
             <a href="https://promocrat.com" target="_blank" rel="noopener noreferrer" class="brand" aria-label="promocrat — home">
@@ -98,14 +81,10 @@
         </div>
     </header>
 
-    <!-- ============================================
-         HERO SECTION
-    ============================================= -->
+    <!-- ▲ HERO SECTION · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="hero" id="hero">
         <div class="container hero-grid">
             <div class="hero-content">
-                <!-- Powered-by row: pulsing dot + "Powered by" text on the plain
-                     background, then the Instantly logo wrapped in a Liquid Glass chip. -->
                 <div class="hero-attribution">
                     <span class="location-chip-dot" aria-hidden="true"></span>
                     <span class="location-chip-text">Powered by</span>
@@ -123,10 +102,8 @@
                     <span class="hero-tagline-access">Curated, limited capacity, approval-only.</span>
                 </p>
 
-                <!-- Location + date line, plain (no chip, no dot) -->
                 <p class="hero-meta-line">Bucharest · June 19 – 20, 2026</p>
 
-                <!-- INLINE COUNTDOWN — FOMO above the fold. -->
                 <div class="hero-countdown" id="countdown-timer" data-target="2026-06-19T09:00:00+03:00">
                     <p class="hero-countdown-label">
                         <span class="hero-countdown-livedot" aria-hidden="true"></span>
@@ -155,10 +132,6 @@
                 <div class="hero-actions">
                     <a href="#tickets" class="btn btn-primary btn-lg">Buy Tickets</a>
 
-                    <!-- Hover-border-gradient CTA — a brand-green "spot" travels
-                         around the perimeter (TOP → LEFT → BOTTOM → RIGHT) on a
-                         smooth 3s loop. On hover the loop pauses and the spot
-                         expands into a uniform glow. Pure CSS, no JS. -->
                     <a href="#partner" class="hover-gradient-cta" aria-label="Be a Partner">
                         <span class="hover-gradient-cta-inner">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -173,10 +146,6 @@
             <div class="hero-visual">
                 <div class="hero-3d">
                     <div class="hero-3d-glow" aria-hidden="true"></div>
-                    <!-- The "scene" is the layer that floats. House + people share
-                         this transform so they move as one composition. Each person
-                         is absolutely positioned over the house and pops in with a
-                         staggered delay after the house is on screen. -->
                     <div class="hero-3d-scene">
                         <img src="assets/casa%20fara%20omuleti.png" alt="AI House — 3D illustration of the A-frame venue where AI builders gather." class="hero-3d-house" fetchpriority="high" decoding="async">
                         <img src="assets/omulet%201.png" alt="" aria-hidden="true" class="hero-3d-person hero-3d-person-1" loading="lazy" decoding="async">
@@ -191,9 +160,7 @@
         </div>
     </section>
 
-    <!-- ============================================
-         ABOUT THE EVENT
-    ============================================= -->
+    <!-- ▲ ABOUT THE EVENT · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="about-section fade-in" id="about">
         <div class="container">
             <div class="about-intro">
@@ -217,8 +184,6 @@
                     <span class="about-quote">Thousands may apply. Only a curated room gets in.</span>
                 </p>
 
-                <!-- Press-to-reveal Bolt perk. Starts covered by a dark "We got a surprise" pane;
-                     click bursts brand-green confetti and reveals the actual Bolt callout. -->
                 <div class="perk-reveal" id="boltPerk">
                     <button class="perk-cover" type="button" id="boltPerkCover" aria-expanded="false" aria-controls="boltPerkInner">
                         <span class="perk-cover-spark" aria-hidden="true">✦</span>
@@ -239,13 +204,8 @@
         </div>
     </section>
 
-    <!-- ============================================
-         POWERED BY — named sponsors
-    ============================================= -->
+    <!-- ▲ POWERED BY — named sponsors · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="sponsors-section fade-in" id="sponsors">
-        <!-- On mobile this container becomes position:sticky inside a tall
-             outer section, creating the "scroll vertically → cards slide
-             horizontally" effect. On desktop it renders as a normal flow. -->
         <div class="container sponsors-content">
             <p class="eyebrow eyebrow-center">Powered by</p>
             <h2 class="section-title section-title-center">Backed by the operators<br>behind the products you use.</h2>
@@ -277,7 +237,6 @@
                 </article>
             </div>
 
-            <!-- Mobile-only dot navigation for the sponsors slider -->
             <div class="sponsors-dots" id="sponsorsDots" aria-hidden="true">
                 <button type="button" class="sponsors-dot is-active" data-slide="0" aria-label="Slide 1"></button>
                 <button type="button" class="sponsors-dot" data-slide="1" aria-label="Slide 2"></button>
@@ -285,7 +244,6 @@
                 <button type="button" class="sponsors-dot" data-slide="3" aria-label="Slide 4"></button>
             </div>
 
-            <!-- Inside the sticky pin so it stays visible while cards slide -->
             <p class="sponsors-footnote">
                 Want to get involved as a community partner?
                 <a href="mailto:sandra.ehigiator@promocrat.ro">sandra.ehigiator@promocrat.ro</a>
@@ -293,9 +251,7 @@
         </div>
     </section>
 
-    <!-- ============================================
-         CURATED BY — Andrei Ilie + Alex Gavril
-    ============================================= -->
+    <!-- ▲ CURATED BY — Andrei Ilie + Alex Gavril · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="curators-section fade-in" id="curators">
         <div class="container">
             <p class="eyebrow">People in the room</p>
@@ -306,7 +262,6 @@
             </p>
 
             <div class="room-people" id="roomPeople">
-                <!-- Speakers first, then the two curators (added after Mihail) -->
                 <article class="attendee-card">
                     <span class="attendee-badge">Speaker</span>
                     <a href="https://www.linkedin.com/in/sergiu/" target="_blank" rel="noopener noreferrer" class="attendee-linkedin" aria-label="Sergiu Neguț on LinkedIn">
@@ -371,7 +326,6 @@
                     <p class="attendee-bio">Builds at ElevenLabs, the AI voice-synthesis startup, with a strong background in Java and cybersecurity, having represented Romania at the European Cyber Security Challenge.</p>
                 </article>
 
-                <!-- Curators last -->
                 <article class="curator-card">
                     <span class="curator-badge">Curated by</span>
                     <a href="https://www.linkedin.com/in/alexgavril/" target="_blank" rel="noopener noreferrer" class="curator-linkedin" aria-label="Alex Gavril on LinkedIn">
@@ -426,7 +380,6 @@
                 </article>
             </div>
 
-            <!-- Mobile-only dot nav for the people reel -->
             <div class="room-dots" id="roomDots" aria-hidden="true">
                 <button type="button" class="room-dot is-active" data-slide="0" aria-label="Person 1"></button>
                 <button type="button" class="room-dot" data-slide="1" aria-label="Person 2"></button>
@@ -438,9 +391,7 @@
         </div>
     </section>
 
-    <!-- ============================================
-         WHAT TO EXPECT — Timeline format
-    ============================================= -->
+    <!-- ▲ WHAT TO EXPECT — Timeline format · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="timeline-section fade-in" id="expect">
         <div class="container">
             <p class="eyebrow">What to expect</p>
@@ -547,9 +498,7 @@
 
     </section>
 
-    <!-- ============================================
-         AGENDA — Day 1 / Day 2 switcher + timeline
-    ============================================= -->
+    <!-- ▲ AGENDA — Day 1 / Day 2 switcher + timeline · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="agenda-section fade-in" id="agenda">
         <div class="container">
             <p class="eyebrow eyebrow-center">Agenda</p>
@@ -559,7 +508,6 @@
                 times are indicative and may shift slightly on the day.
             </p>
 
-            <!-- Day switcher -->
             <div class="agenda-switch" role="tablist" aria-label="Choose a day">
                 <button class="agenda-switch-btn is-active" role="tab" aria-selected="true" data-agenda-day="1" id="agenda-tab-1" aria-controls="agenda-day-1">
                     <span class="agenda-switch-day">Day 1</span>
@@ -571,7 +519,6 @@
                 </button>
             </div>
 
-            <!-- ===== DAY 1 ===== -->
             <div class="agenda-day is-active" role="tabpanel" id="agenda-day-1" aria-labelledby="agenda-tab-1" data-agenda-panel="1">
                 <div class="agenda-day-head">
                     <span class="agenda-theme-label">Theme</span>
@@ -652,7 +599,6 @@
                 </div>
             </div>
 
-            <!-- ===== DAY 2 ===== -->
             <div class="agenda-day" role="tabpanel" id="agenda-day-2" aria-labelledby="agenda-tab-2" data-agenda-panel="2" hidden>
                 <div class="agenda-day-head">
                     <span class="agenda-theme-label">Theme</span>
@@ -751,11 +697,7 @@
                         </div>
                     </article>
 
-                    <!-- Two parallel 7:00 PM tracks -->
                     <div class="agenda-parallel" id="agendaParallel">
-                        <!-- On phones this inner block pins and the two cards
-                             slide horizontally on scroll (same reel pattern as
-                             the people/sponsors sections). Desktop = side by side. -->
                         <div class="agenda-parallel-sticky">
                             <span class="agenda-parallel-label">Running in parallel</span>
                             <div class="agenda-parallel-grid" id="agendaParallelTrack">
@@ -776,7 +718,6 @@
                                 </article>
                             </div>
 
-                            <!-- Mobile-only dot nav for the parallel reel -->
                             <div class="agenda-parallel-dots" id="agendaParallelDots" aria-hidden="true">
                                 <button type="button" class="room-dot is-active" data-slide="0" aria-label="Parallel event 1"></button>
                                 <button type="button" class="room-dot" data-slide="1" aria-label="Parallel event 2"></button>
@@ -804,9 +745,7 @@
         </div>
     </section>
 
-    <!-- ============================================
-         TICKETS
-    ============================================= -->
+    <!-- ▲ TICKETS · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="tickets-section fade-in" id="tickets">
         <div class="container">
             <p class="eyebrow eyebrow-center">Tickets</p>
@@ -902,9 +841,7 @@
         </div>
     </section>
 
-    <!-- ============================================
-         PARTNERS SLIDER (Partner with AI House CTA + logo marquee)
-    ============================================= -->
+    <!-- ▲ PARTNERS SLIDER (Partner with AI House CTA + logo marquee) · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="partners-strip fade-in" id="partners">
         <div class="container partners-grid">
             <div class="partners-cta">
@@ -915,8 +852,6 @@
 
             <div class="partners-slider" aria-label="Our partners">
                 <div class="partners-track" id="partnersTrack">
-                    <!-- Real partners only — neomixers / promocrat are organizers, not partners.
-                         Duplicated 3x for a populated marquee with only 4 logos. -->
                     <div class="partner-logo"><img src="assets/partners/instantly.svg" alt="Instantly.ai" loading="lazy" decoding="async"></div>
                     <div class="partner-logo"><img src="assets/partners/elevenlabs.svg" alt="ElevenLabs" loading="lazy" decoding="async"></div>
                     <div class="partner-logo"><img src="assets/partners/the-recursive.png" alt="The Recursive" loading="lazy" decoding="async"></div>
@@ -934,9 +869,7 @@
         </div>
     </section>
 
-    <!-- ============================================
-         BE A PARTNER SECTION
-    ============================================= -->
+    <!-- ▲ BE A PARTNER SECTION · made with ❤️ by ZUP! → contact@zup.digital -->
     <section class="partner-section fade-in" id="partner">
         <div class="container">
             <div class="partner-content">
@@ -960,9 +893,7 @@
         </div>
     </section>
 
-    <!-- ============================================
-         FOOTER
-    ============================================= -->
+    <!-- ▲ FOOTER · made with ❤️ by ZUP! → contact@zup.digital -->
     <footer class="site-footer fade-in">
         <div class="container footer-grid">
             <div class="footer-brand">
@@ -1002,8 +933,6 @@
         <div class="container footer-bottom">
             <p class="footer-copy">&copy; 2026 AI House Bucharest. All rights reserved.</p>
 
-            <!-- Built-by credit: liquid-glass chip that expands on hover to reveal
-                 the email. The whole chip is a mailto link. -->
             <a class="zup-credit" href="mailto:contact@zup.digital?subject=Hi%20Zup%21%20%E2%80%94%20New%20website" aria-label="Website by Zup! — email contact@zup.digital">
                 <img src="assets/fulger%20logo%20zup.png" alt="" class="zup-credit-mark" aria-hidden="true" loading="lazy" decoding="async">
                 <span class="zup-credit-label">Website by Zup!</span>
@@ -1014,14 +943,10 @@
         </div>
     </footer>
 
-    <!-- ============================================
-         PARTNER MODAL — choice (email / form) + form
-         Hidden by default. Opened by [data-partner-open] buttons via JS.
-    ============================================= -->
+    <!-- ▲ PARTNER MODAL · made with ❤️ by ZUP! → contact@zup.digital -->
     <div class="modal" id="partnerModal" aria-hidden="true">
         <div class="modal-backdrop" data-partner-close></div>
 
-        <!-- STEP 1 — choice between email and form -->
         <div class="modal-card modal-card--choice" role="dialog" aria-modal="true" aria-labelledby="partnerChoiceTitle" data-partner-step="choice">
             <button type="button" class="modal-close" aria-label="Close" data-partner-close>×</button>
             <p class="eyebrow modal-eyebrow">Partnership</p>
@@ -1049,9 +974,7 @@
             </div>
         </div>
 
-        <!-- STEP 2 — the actual form -->
         <div class="modal-card modal-card--form" role="dialog" aria-modal="true" aria-labelledby="partnerFormTitle" data-partner-step="form" hidden>
-            <!-- Confetti container — particles dropped in via JS on success -->
             <div class="confetti-host" id="formConfetti" aria-hidden="true"></div>
 
             <button type="button" class="modal-close" aria-label="Close" data-partner-close>×</button>
@@ -1063,13 +986,11 @@
             <h3 class="modal-title" id="partnerFormTitle">Tell us a little <span class="text-glow">about you</span>.</h3>
 
             <form class="partner-form" id="partnerForm" novalidate>
-                <!-- Honeypot — hidden from humans, but bots happily fill it. -->
                 <div class="hp-field" aria-hidden="true">
                     <label>Website (leave empty)</label>
                     <input type="text" name="website" tabindex="-1" autocomplete="off">
                 </div>
 
-                <!-- Two-column row on desktop, stacks on mobile -->
                 <div class="form-row-split">
                     <div class="form-row">
                         <label class="form-label" for="pf-nume">Nume</label>
@@ -1104,7 +1025,6 @@
                 </button>
             </form>
 
-            <!-- Success state — minimal: just "Sent!" + glass close button -->
             <div class="form-success form-success--minimal" id="pf-success" hidden>
                 <h4 class="form-success-title">Sent!</h4>
                 <button type="button" class="btn-glass btn-glass--auto" data-partner-close>Close</button>
@@ -1112,17 +1032,11 @@
         </div>
     </div>
 
-    <!-- Vercel Analytics — vanilla integration (not the Next.js npm package).
-         Script is auto-served by Vercel when Analytics is enabled in the
-         project dashboard. The tiny shim queues calls before the script loads. -->
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 
-    <!-- Vercel Speed Insights — Core Web Vitals (LCP, FID, CLS, INP, TTFB).
-         Same vanilla pattern as Analytics. Enable in Vercel dashboard →
-         Speed Insights tab to populate the dashboard with real-user data. -->
     <script>
         window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
     </script>
