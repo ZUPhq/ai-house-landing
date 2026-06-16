@@ -1800,51 +1800,49 @@ ul {
 
 /* The 11 speaker cards live in a horizontal scroll-snap carousel on every
    viewport — swipe / drag / arrows / dots. */
+/* ---------- PEOPLE IN THE ROOM ----------
+   Desktop: rows of four horizontal cards — photo on the left, and on the right
+   the name (hero), then the title, then the company logo under it. Flex + center
+   so a short final row (e.g. the last 3) sits centered, not left-aligned.
+   Mobile collapses to a one-card drag slider (see the max-width: 768px block). */
 .room-people {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 18px;
-    margin-top: 28px;
-    padding: 12px 0;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    cursor: grab;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 56px, #000 calc(100% - 56px), transparent);
-    mask-image: linear-gradient(to right, transparent, #000 56px, #000 calc(100% - 56px), transparent);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 44px;
 }
-.room-people:active { cursor: grabbing; }
-.room-people::-webkit-scrollbar { display: none; }
 
-/* ---------- SPEAKER CARD (horizontal: photo left, info right) ---------- */
+/* ---------- SPEAKER CARD (photo left · name / title / logo right) ---------- */
 .speaker-card {
     position: relative;
-    flex: 0 0 380px;
-    scroll-snap-align: start;
+    flex: 0 0 calc((100% - 48px) / 4); /* exactly 4 per row (3 × 16px gaps) */
+    min-height: 172px;                 /* every card the same size, regardless of title length */
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 18px;
-    align-items: center;
-    padding: 22px 24px;
+    gap: 15px;
+    align-items: start;
+    padding: 20px 20px 18px;
     background: var(--color-surface);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.speaker-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
 }
 
-.speaker-card:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
-
 .speaker-photo-wrap {
-    width: 92px;
-    height: 92px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .speaker-photo {
@@ -1855,21 +1853,57 @@ ul {
     display: block;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.speaker-card:hover .speaker-photo { transform: scale(1.05); }
 
-.speaker-card:hover .speaker-photo { transform: scale(1.04); }
-
+/* Right column — name first and biggest, then title, then logo */
 .speaker-info { min-width: 0; }
 
+.speaker-name {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    padding-right: 26px; /* clear the LinkedIn badge */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+}
+.speaker-name .name-link {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+.speaker-name .name-link:hover,
+.speaker-name .name-link:focus-visible { color: var(--color-primary); outline: none; }
+
+.speaker-position {
+    color: var(--color-muted);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
+/* Company logo — sits under the title. One uniform size for every brand:
+   normalized by height (logos have very different aspect ratios), with
+   max-width: 100% so the wide wordmarks can't overflow the card. */
 .speaker-logo {
     display: flex;
     align-items: center;
-    height: 44px;
-    margin-bottom: 8px;
+    height: 40px;
 }
 
 .speaker-logo-img {
-    max-height: 26px;
-    max-width: 150px;
+    max-height: 28px;
+    max-width: 100%;
     width: auto;
     object-fit: contain;
     display: block;
@@ -1877,46 +1911,32 @@ ul {
     -webkit-filter: brightness(0) invert(1);
 }
 
-/* Enlarged logos for brands whose mark reads small at the default size */
+/* A few compact marks (RBL, Politehnica, Bridging Gaps) read small at the
+   shared height — bump just these up. The logo row above is sized to fit them
+   so every card stays the same height. */
 .speaker-logo-img--lg {
-    max-height: 42px;
-    max-width: 190px;
-}
-
-.speaker-name {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin-bottom: 5px;
-}
-
-.speaker-position {
-    color: var(--color-muted);
-    font-size: 13px;
-    font-weight: 300;
-    line-height: 1.45;
+    max-height: 40px;
 }
 
 .speaker-linkedin {
     position: absolute;
     top: 14px;
     right: 14px;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 9px;
+    border-radius: 8px;
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: background-color 0.25s ease, border-color 0.25s ease,
                 color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
     z-index: 3;
 }
-.speaker-linkedin svg { width: 15px; height: 15px; display: block; }
+.speaker-linkedin svg { width: 14px; height: 14px; display: block; }
 .speaker-linkedin:hover,
 .speaker-linkedin:focus-visible {
     background: var(--color-primary);
@@ -1937,9 +1957,10 @@ ul {
     margin: 0 auto;
 }
 
-/* Carousel controls — arrows + dots */
+/* Carousel controls — arrows + dots. Slider lives on mobile only, so these
+   are hidden on desktop and switched back on inside the phone media query. */
 .room-controls {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     gap: 12px;
@@ -3801,13 +3822,62 @@ ul {
         padding: 0 8px;
     }
 
-    /* Speakers carousel — wider cards (swipe one at a time) on phones */
+    /* ----- PEOPLE IN THE ROOM — one-card drag slider on phones.
+       Desktop is a 4-up grid; here it collapses into a horizontal scroll-snap
+       reel of the same photo-left / name → title → logo cards. ----- */
     .room-people {
-        margin: 28px calc(-1 * var(--container-pad)) 0;
-        padding: 0 var(--container-pad);
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        margin: 30px calc(-1 * var(--container-pad)) 0;
+        padding: 12px var(--container-pad);
         gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        cursor: grab;
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+        mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
     }
-    .speaker-card { flex-basis: 86vw; }
+    .room-people:active { cursor: grabbing; }
+    .room-people::-webkit-scrollbar { display: none; }
+
+    .speaker-card {
+        flex: 0 0 80vw;
+        max-width: 360px;
+        min-height: 0;
+        scroll-snap-align: center;
+        gap: 16px;
+        padding: 22px 20px 20px;
+        transform: none;
+    }
+    .speaker-card:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: var(--color-border);
+    }
+    .speaker-photo-wrap { width: 84px; height: 84px; }
+    /* Wide cards on phones — show the full name + title, no line clamp */
+    .speaker-name {
+        font-size: 17px;
+        display: block;
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+        overflow: visible;
+    }
+    .speaker-position {
+        font-size: 13px;
+        display: block;
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+        overflow: visible;
+    }
+    .speaker-logo { height: 44px; }
+    .speaker-logo-img { max-height: 30px; max-width: 100%; }
+    .speaker-logo-img--lg { max-height: 42px; }
+
+    .room-controls { display: flex; }
     .carousel-arrow { width: 36px; height: 36px; }
     .room-dots { max-width: 50%; }
     .curators-row { grid-template-columns: 1fr; }

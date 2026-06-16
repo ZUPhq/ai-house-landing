@@ -295,6 +295,9 @@
     var roomDots = document.querySelectorAll("#roomDots .room-dot");
     var roomPrev = document.getElementById("roomPrev");
     var roomNext = document.getElementById("roomNext");
+    // The reel only exists on phones — on desktop the speakers are a static
+    // hover-mosaic, so drag-to-scroll must stay off there.
+    var roomMobileMQ = window.matchMedia("(max-width: 768px)");
 
     if (roomTrack && roomTrack.children.length) {
         var roomCards = roomTrack.children;
@@ -345,6 +348,7 @@
         // Drag-to-scroll for mouse users (suppress the click that follows a drag)
         var rDown = false, rStartX = 0, rStartScroll = 0, rMoved = false;
         roomTrack.addEventListener("pointerdown", function (e) {
+            if (!roomMobileMQ.matches) return;   // desktop mosaic: no drag
             rDown = true; rMoved = false;
             rStartX = e.clientX; rStartScroll = roomTrack.scrollLeft;
         });

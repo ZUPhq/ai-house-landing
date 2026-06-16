@@ -24,3 +24,9 @@ node_modules/
 
 # Temp
 *.bak
+
+# Image backups — original full-size sources kept locally before WebP conversion.
+# (The originals also remain in git history from earlier commits, so they're
+# recoverable; no need to bloat the repo with them again. Excluded from deploy
+# via .vercelignore too.)
+assets/_originals/
