@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "AI House Bucharest landing page — vanilla static site with a single Vercel serverless function for partner-form submissions.",
+  "scripts": {
+    "dev": "python3 -m http.server 5173"
+  },
   "dependencies": {
     "google-auth-library": "^9.14.2"
   }

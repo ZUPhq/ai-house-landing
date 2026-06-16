@@ -287,77 +287,83 @@
         updateSponsorsSticky();
     }
 
-    // ---------- PEOPLE IN THE ROOM: STICKY HORIZONTAL SCROLL (mobile) ----------
-    // Same scrolly-telling pattern as the sponsors reel. The curators
-    // section is 360vh on phones with its .container pinned; JS maps page
-    // scroll progress to a horizontal translate of the .room-people track
-    // so all six people slide in from the right before the page moves on.
-    var roomSection = document.getElementById("curators");
+    // ---------- PEOPLE IN THE ROOM: horizontal carousel ----------
+    // The 11 speaker cards are a scroll-snap carousel on every viewport. JS
+    // syncs the dots + arrow disabled-states with scroll position, handles
+    // dot/arrow clicks, and adds drag-to-scroll for mouse users.
     var roomTrack = document.getElementById("roomPeople");
-    var roomDots = document.querySelectorAll(".room-dot");
+    var roomDots = document.querySelectorAll("#roomDots .room-dot");
+    var roomPrev = document.getElementById("roomPrev");
+    var roomNext = document.getElementById("roomNext");
 
-    if (roomSection && roomTrack && roomDots.length) {
+    if (roomTrack && roomTrack.children.length) {
         var roomCards = roomTrack.children;
-        var roomMobileQuery = window.matchMedia("(max-width: 768px)");
         var roomTicking = false;
 
-        function roomIsMobile() { return roomMobileQuery.matches; }
-
-        function updateRoomSticky() {
-            if (!roomIsMobile()) {
-                roomTrack.style.transform = "";
-                return;
-            }
-
-            var rect = roomSection.getBoundingClientRect();
-            var sectionHeight = roomSection.offsetHeight;
-            var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-            var scrollableHeight = sectionHeight - viewportHeight;
-            if (scrollableHeight <= 0) return;
-
-            var scrolled = -rect.top;
-            var progress = scrolled / scrollableHeight;
-            if (progress < 0) progress = 0;
-            else if (progress > 1) progress = 1;
-
-            var trackWidth = roomTrack.scrollWidth;
-            var visibleWidth = roomTrack.parentElement
-                ? roomTrack.parentElement.clientWidth
-                : window.innerWidth;
-            var maxTranslate = Math.max(0, trackWidth - visibleWidth);
-            roomTrack.style.transform =
-                "translate3d(" + (-progress * maxTranslate).toFixed(2) + "px, 0, 0)";
-
-            var activeIndex = Math.round(progress * (roomCards.length - 1));
-            roomDots.forEach(function (dot, idx) {
-                dot.classList.toggle("is-active", idx === activeIndex);
-            });
+        function roomStep() {
+            if (roomCards.length < 2) return roomTrack.clientWidth;
+            return roomCards[1].getBoundingClientRect().left -
+                   roomCards[0].getBoundingClientRect().left;
         }
 
-        roomDots.forEach(function (dot, index) {
-            dot.addEventListener("click", function () {
-                if (!roomIsMobile()) return;
-                if (!roomCards.length) return;
-                var targetProgress = index / (roomCards.length - 1);
-                var sectionTop = roomSection.getBoundingClientRect().top + window.scrollY;
-                var sectionHeight = roomSection.offsetHeight;
-                var viewportHeight = window.innerHeight;
-                var targetY = sectionTop + targetProgress * (sectionHeight - viewportHeight);
-                window.scrollTo({ top: targetY, behavior: "smooth" });
+        function roomSync() {
+            var step = roomStep() || 1;
+            var maxScroll = roomTrack.scrollWidth - roomTrack.clientWidth;
+            var idx;
+            if (roomTrack.scrollLeft >= maxScroll - 2) {
+                idx = roomCards.length - 1;   // at the end: highlight the LAST card
+            } else {
+                idx = Math.round(roomTrack.scrollLeft / step);
+            }
+            if (idx < 0) idx = 0;
+            else if (idx > roomCards.length - 1) idx = roomCards.length - 1;
+            roomDots.forEach(function (d, i) {
+                d.classList.toggle("is-active", i === idx);
             });
-        });
+            if (roomPrev) roomPrev.disabled = roomTrack.scrollLeft <= 2;
+            if (roomNext) roomNext.disabled = roomTrack.scrollLeft >= maxScroll - 2;
+        }
 
-        window.addEventListener("scroll", function () {
+        roomTrack.addEventListener("scroll", function () {
             if (roomTicking) return;
             roomTicking = true;
-            requestAnimationFrame(function () {
-                updateRoomSticky();
-                roomTicking = false;
-            });
+            requestAnimationFrame(function () { roomSync(); roomTicking = false; });
         }, { passive: true });
 
-        window.addEventListener("resize", updateRoomSticky);
-        updateRoomSticky();
+        roomDots.forEach(function (dot, i) {
+            dot.addEventListener("click", function () {
+                roomTrack.scrollTo({ left: i * roomStep(), behavior: "smooth" });
+            });
+        });
+        if (roomPrev) roomPrev.addEventListener("click", function () {
+            roomTrack.scrollBy({ left: -roomTrack.clientWidth * 0.9, behavior: "smooth" });
+        });
+        if (roomNext) roomNext.addEventListener("click", function () {
+            roomTrack.scrollBy({ left: roomTrack.clientWidth * 0.9, behavior: "smooth" });
+        });
+
+        // Drag-to-scroll for mouse users (suppress the click that follows a drag)
+        var rDown = false, rStartX = 0, rStartScroll = 0, rMoved = false;
+        roomTrack.addEventListener("pointerdown", function (e) {
+            rDown = true; rMoved = false;
+            rStartX = e.clientX; rStartScroll = roomTrack.scrollLeft;
+        });
+        roomTrack.addEventListener("pointermove", function (e) {
+            if (!rDown) return;
+            var dx = e.clientX - rStartX;
+            if (Math.abs(dx) > 4) rMoved = true;
+            roomTrack.scrollLeft = rStartScroll - dx;
+        });
+        function rEnd() { rDown = false; }
+        roomTrack.addEventListener("pointerup", rEnd);
+        roomTrack.addEventListener("pointercancel", rEnd);
+        roomTrack.addEventListener("pointerleave", rEnd);
+        roomTrack.addEventListener("click", function (e) {
+            if (rMoved) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
+
+        window.addEventListener("resize", roomSync);
+        roomSync();
     }
 
     // ---------- AGENDA PARALLEL EVENTS: swipe carousel (mobile) ----------

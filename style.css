@@ -1798,22 +1798,208 @@ ul {
     margin-right: auto;
 }
 
-/* All six people share one container. On desktop it's a 12-col grid:
-   the two curators span 6 (2 per row), the four attendees span 3 (4 per
-   row). On mobile it becomes a horizontal scroll-jack reel (see the
-   max-width:768px block). */
+/* The 11 speaker cards live in a horizontal scroll-snap carousel on every
+   viewport — swipe / drag / arrows / dots. */
 .room-people {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 18px;
+    margin-top: 28px;
+    padding: 12px 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    cursor: grab;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 60px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 60px), transparent);
+}
+.room-people:active { cursor: grabbing; }
+.room-people::-webkit-scrollbar { display: none; }
+
+/* ---------- SPEAKER CARD (horizontal: photo left, info right) ---------- */
+.speaker-card {
+    position: relative;
+    flex: 0 0 380px;
+    scroll-snap-align: start;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 24px;
-    margin-top: 48px;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: center;
+    padding: 22px 24px;
+    background: var(--color-surface);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
-.room-people > .curator-card { grid-column: span 6; }
-.room-people > .attendee-card { grid-column: span 3; }
+.speaker-card:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
 
-/* Dot nav — mobile only */
-.room-dots { display: none; }
+.speaker-photo-wrap {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+}
+
+.speaker-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.speaker-card:hover .speaker-photo { transform: scale(1.04); }
+
+.speaker-info { min-width: 0; }
+
+.speaker-logo {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    margin-bottom: 8px;
+}
+
+.speaker-logo-img {
+    max-height: 26px;
+    max-width: 150px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+}
+
+/* Enlarged logos for brands whose mark reads small at the default size */
+.speaker-logo-img--lg {
+    max-height: 42px;
+    max-width: 190px;
+}
+
+.speaker-name {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 5px;
+}
+
+.speaker-position {
+    color: var(--color-muted);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.45;
+}
+
+.speaker-linkedin {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 9px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: background-color 0.25s ease, border-color 0.25s ease,
+                color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    z-index: 3;
+}
+.speaker-linkedin svg { width: 15px; height: 15px; display: block; }
+.speaker-linkedin:hover,
+.speaker-linkedin:focus-visible {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #000000;
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(3, 215, 119, 0.30);
+    outline: none;
+}
+
+/* ---------- CURATORS — kept as-is, in their own row below the speakers ---------- */
+.room-curators-section { padding: 4px 0 var(--section-pad); }
+.curators-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+/* Carousel controls — arrows + dots */
+.room-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 26px;
+}
+.room-dots {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 60%;
+}
+.carousel-arrow {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    isolation: isolate;
+    border: 0;
+    color: var(--color-text);
+    cursor: pointer;
+
+    /* Apple Liquid Glass — inner corner-bright tint + refraction + rim light */
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.22) 0%,
+            rgba(255, 255, 255, 0.06) 30%,
+            rgba(255, 255, 255, 0.04) 70%,
+            rgba(255, 255, 255, 0.20) 100%);
+    backdrop-filter: url(#liquid-glass) blur(14px) saturate(180%) brightness(1.10);
+    -webkit-backdrop-filter: blur(14px) saturate(180%) brightness(1.10);
+    box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.30),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+        0 8px 22px rgba(0, 0, 0, 0.30),
+        0 2px 6px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.carousel-arrow svg { width: 18px; height: 18px; display: block; position: relative; z-index: 1; }
+.carousel-arrow:hover {
+    transform: translateY(-1px);
+    color: var(--color-primary);
+    box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.30),
+        inset 0 0 0 1px rgba(3, 215, 119, 0.40),
+        0 12px 26px rgba(0, 0, 0, 0.36),
+        0 2px 6px rgba(0, 0, 0, 0.20);
+}
+.carousel-arrow[disabled] {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+}
 
 .room-dot {
     width: 9px;
@@ -2117,14 +2303,6 @@ ul {
     font-size: 13px;
     font-weight: 500;
     line-height: 1.5;
-}
-
-.attendee-bio {
-    color: var(--color-muted);
-    font-size: 13px;
-    font-weight: 300;
-    line-height: 1.55;
-    margin-top: 10px;
 }
 
 /* LinkedIn pill — top-right, mirrors the curator card treatment */
@@ -2577,6 +2755,7 @@ ul {
 
 /* ---------- Day theme header ---------- */
 .agenda-day-head {
+    text-align: center;
     padding: 24px 28px;
     margin-bottom: 36px;
     border-radius: 18px;
@@ -2733,6 +2912,21 @@ ul {
     object-fit: contain;
     display: block;
 }
+
+/* Wrapping row of compact speaker chips for panels */
+.agenda-speakers-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+.agenda-speaker--mini {
+    margin-top: 0;
+    padding: 4px 14px 4px 4px;
+    gap: 8px;
+}
+.agenda-speaker--mini .agenda-speaker-photo { width: 28px; height: 28px; }
+.agenda-speaker--mini .agenda-speaker-name { font-size: 13px; }
 
 /* Logos with dark/black native colors → flip to white for the dark chip */
 .agenda-speaker-logo img.is-white {
@@ -3188,7 +3382,6 @@ ul {
     .hero-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
     .tickets-grid { grid-template-columns: repeat(2, 1fr); }
     .sponsors-grid { grid-template-columns: repeat(2, 1fr); }
-    .room-people > .attendee-card { grid-column: span 6; } /* 2 per row */
     .footer-grid { grid-template-columns: 1fr 1fr; }
 
     /* Timeline — slightly tighter on tablets */
@@ -3310,7 +3503,6 @@ ul {
     .partners-grid { grid-template-columns: 1fr; gap: 32px; }
     .partners-cta { padding-right: 0; border-right: none; border-bottom: 1px solid var(--color-border); padding-bottom: 24px; text-align: center; }
 
-    .room-people > .curator-card { grid-column: span 12; } /* 1 per row */
 }
 
 /* =========================================================
@@ -3609,104 +3801,16 @@ ul {
         padding: 0 8px;
     }
 
-    /* =========================================================
-       PEOPLE IN THE ROOM — sticky horizontal scroll on phones.
-       Same scrolly-telling pattern as the sponsors reel: the section
-       grows tall, .container pins to the viewport, and JS translates
-       .room-people horizontally as the page scrolls through it. All six
-       people (2 curators + 4 attendees) ride one track.
-       ========================================================= */
-    .curators-section {
-        height: 360vh;                 /* long runway for 6 cards */
-        content-visibility: visible;   /* required — auto breaks sticky */
-        padding: 0;
-    }
-
-    .curators-section > .container {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        height: 100dvh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        overflow: hidden;
-        padding-top: 72px;
-        padding-bottom: 16px;
-    }
-
-    /* Tighten the heading so the pinned column fits the tallest card */
-    .curators-section > .container > .eyebrow { margin-bottom: 6px; }
-    .curators-section > .container > .section-title { margin-bottom: 8px; }
-    /* Hidden in the pinned reel to leave vertical room for the taller cards */
-    .curators-section > .container > .section-lead { display: none; }
-
+    /* Speakers carousel — wider cards (swipe one at a time) on phones */
     .room-people {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 16px;
-        overflow: visible;
-        will-change: transform;
-        max-width: none;
-        /* Break out of container padding so cards travel past the edges */
-        margin: 18px calc(-1 * var(--container-pad)) 0;
+        margin: 28px calc(-1 * var(--container-pad)) 0;
         padding: 0 var(--container-pad);
-        align-items: center;
+        gap: 14px;
     }
-
-    .room-people > .curator-card,
-    .room-people > .attendee-card {
-        flex: 0 0 82vw;
-        max-width: 82vw;
-        margin: 0;
-    }
-
-    /* The four attendee cards all share one fixed height so they read as a
-       uniform set — content vertically centered, role + bio clamped so a
-       longer entry (e.g. Matei's) doesn't make its card taller than the rest. */
-    .room-people > .attendee-card {
-        height: 430px;
-        justify-content: center;
-    }
-    .room-people > .attendee-card .attendee-role {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .room-people > .attendee-card .attendee-bio {
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    /* Curator cards share the exact same fixed height as the attendee cards
-       so all six in the reel sit at one level. Smaller avatar + clamped bio
-       keep the content within the box. */
-    .room-people > .curator-card {
-        height: 430px;
-        justify-content: center;
-        padding: 24px 20px;
-        gap: 10px;
-    }
-    .room-people > .curator-card .curator-photo-wrap { width: 104px; }
-    .room-people > .curator-card .curator-bio {
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        font-size: 13px;
-        max-width: 100%;
-    }
-
-    .room-dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 18px;
-    }
+    .speaker-card { flex-basis: 86vw; }
+    .carousel-arrow { width: 36px; height: 36px; }
+    .room-dots { max-width: 50%; }
+    .curators-row { grid-template-columns: 1fr; }
 
     /* ----- Partners strip ----- */
     .partners-strip { padding: 40px 0; }
