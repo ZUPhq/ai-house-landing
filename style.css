@@ -1821,7 +1821,7 @@ ul {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 15px;
-    align-items: start;
+    align-items: stretch;
     padding: 20px 20px 18px;
     background: var(--color-surface);
     backdrop-filter: blur(14px);
@@ -1855,8 +1855,13 @@ ul {
 }
 .speaker-card:hover .speaker-photo { transform: scale(1.05); }
 
-/* Right column — name first and biggest, then title, then logo */
-.speaker-info { min-width: 0; }
+/* Right column — name first and biggest, then title, then logo pinned to the
+   bottom of the card (flex column + margin-top:auto on the logo). */
+.speaker-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
 
 .speaker-name {
     font-size: 15px;
@@ -1865,11 +1870,6 @@ ul {
     letter-spacing: -0.01em;
     margin-bottom: 4px;
     padding-right: 26px; /* clear the LinkedIn badge */
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
 }
 .speaker-name .name-link {
     color: var(--color-text);
@@ -1885,11 +1885,6 @@ ul {
     font-weight: 300;
     line-height: 1.4;
     margin-bottom: 12px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    overflow: hidden;
 }
 
 /* Company logo — sits under the title. One uniform size for every brand:
@@ -1899,6 +1894,7 @@ ul {
     display: flex;
     align-items: center;
     height: 40px;
+    margin-top: auto; /* pin the logo to the bottom of the card */
 }
 
 .speaker-logo-img {
