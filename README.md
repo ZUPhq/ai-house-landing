@@ -4,9 +4,9 @@ Single-page event landing for **AI House Bucharest** (June 19–20, 2026, Privat
 
 ## Live URLs
 
-- **Production**: https://ai-house-bucharest.vercel.app
+- **Custom domain** (primary): https://aihouse.promocrat.com — connected in Vercel
+- **Production (Vercel)**: https://ai-house-bucharest.vercel.app
 - **Source**: https://github.com/ZUPhq/ai-house-landing
-- **Custom domain** (in progress): `aihouse.promocrat.com`
 - **Luma source of truth for tickets**: https://luma.com/uj9v0i78
 
 ---
