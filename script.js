@@ -763,10 +763,12 @@
             alertCta.addEventListener("click", function (e) {
                 e.preventDefault();
                 closeAlert();
-                var tickets = document.getElementById("tickets");
-                if (tickets && typeof tickets.scrollIntoView === "function") {
-                    tickets.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
+                // Use the SAME native fragment navigation the nav links use — it
+                // honors scroll-padding-top:90px + scroll-behavior:smooth and is
+                // proven to land correctly on this page. Defer to the next task so
+                // the modal scroll-lock (overflow:hidden on <html>) is released and
+                // layout has settled before the browser performs the jump.
+                setTimeout(function () { window.location.hash = "#partners"; }, 50);
             });
         }
 
