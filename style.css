@@ -40,6 +40,10 @@
     --color-border: rgba(255, 255, 255, 0.08);
     --color-border-strong: rgba(3, 215, 119, 0.35);
 
+    /* Sold-out red — used for ticket ribbons + disabled CTAs */
+    --color-soldout: #E5484D;
+    --color-soldout-soft: rgba(229, 72, 77, 0.12);
+
     /* Typography */
     --font-primary: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -425,6 +429,21 @@ ul {
     border-color: var(--color-primary);
     color: var(--color-primary);
     background: rgba(3, 215, 119, 0.05);
+}
+
+/* Disabled CTA for sold-out tickets — red-tinted, non-interactive.
+   No hover state, no pointer; renders as a <button disabled>. */
+.btn-soldout,
+.btn-soldout:hover {
+    background: var(--color-soldout-soft);
+    color: var(--color-soldout);
+    border-color: rgba(229, 72, 77, 0.45);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 /* =========================================================
@@ -2528,6 +2547,54 @@ ul {
     z-index: 2;
 }
 
+/* Red "Sold Out" ribbon — same diagonal geometry as .ticket-ribbon,
+   recolored. Pinned to sold-out cards (Full Pass, Day 2, Day 1). */
+.ticket-ribbon-soldout {
+    background: var(--color-soldout);
+    color: #FFFFFF;
+    box-shadow: 0 6px 16px rgba(229, 72, 77, 0.40);
+}
+
+/* Green "Available" ribbon — marks Evening Mixer as the only buyable pass.
+   Inherits the green base, kept explicit for intent. */
+.ticket-ribbon-available {
+    background: var(--color-primary);
+    color: #000000;
+    box-shadow: 0 6px 16px rgba(3, 215, 119, 0.35);
+}
+
+/* Sold-out card — content dimmed/desaturated so the red ribbon and the
+   "Sold Out" CTA stay vivid. overflow:hidden clips the diagonal ribbon. */
+.ticket-card-soldout {
+    overflow: hidden;
+}
+
+.ticket-card-soldout .ticket-tag,
+.ticket-card-soldout .ticket-name,
+.ticket-card-soldout .ticket-desc,
+.ticket-card-soldout .ticket-price,
+.ticket-card-soldout .price-with-vat {
+    opacity: 0.45;
+    filter: grayscale(0.5);
+}
+
+/* "Sold out" stock line stays legible + red for reinforcement. */
+.ticket-card-soldout .ticket-stock {
+    color: var(--color-soldout);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Available card (Evening Mixer) — permanently promoted look so the only
+   buyable pass stands out, regardless of hover/touch. */
+.ticket-card-available {
+    overflow: hidden;
+    border-color: var(--color-primary);
+    background: linear-gradient(180deg, rgba(3, 215, 119, 0.10), var(--color-surface) 60%);
+    box-shadow: 0 0 0 1px var(--color-primary), 0 30px 60px rgba(3, 215, 119, 0.18);
+}
+
 /* Featured "Full Pass" styling — applied PERMANENTLY only on touch
    devices (where hover doesn't exist as a discovery mechanism).
    On desktop, .ticket-card-feature looks identical to other cards
@@ -2551,7 +2618,7 @@ ul {
    glow + rise. The outline CTA flips to filled green. No card is
    pre-promoted by default — discovery happens via the cursor. */
 @media (hover: hover) {
-    .ticket-card:hover {
+    .ticket-card:not(.ticket-card-soldout):hover {
         border-color: var(--color-primary);
         background: linear-gradient(180deg, rgba(3, 215, 119, 0.12), var(--color-surface) 60%);
         box-shadow: 0 0 0 1px var(--color-primary),
@@ -2559,14 +2626,14 @@ ul {
         transform: translateY(-10px);
     }
 
-    .ticket-card:hover .btn-outline {
+    .ticket-card:not(.ticket-card-soldout):hover .btn-outline {
         background: var(--color-primary);
         color: #000000;
         border-color: var(--color-primary);
     }
 
     /* If the button itself is hovered, keep the strong glow */
-    .ticket-card:hover .btn-outline:hover {
+    .ticket-card:not(.ticket-card-soldout):hover .btn-outline:hover {
         background: var(--color-primary-hover);
         box-shadow: var(--glow);
         transform: translateY(-1px);
@@ -4018,6 +4085,28 @@ html.js .fade-in.is-visible {
 
 .modal-card[hidden] {
     display: none;
+}
+
+/* Ticket alert — narrower, centered single-card variant. Reuses the
+   base .modal-card glass styling; only sizing + alignment differ. */
+.modal-card--alert {
+    max-width: 440px;
+    text-align: center;
+}
+
+.modal-card--alert .modal-lead {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Emphasize the only available pass in brand green. */
+.modal-card--alert strong {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.modal-card--alert .btn {
+    margin-top: 22px;
 }
 
 .modal-close {

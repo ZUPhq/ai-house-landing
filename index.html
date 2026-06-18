@@ -17,7 +17,7 @@
     <link rel="preload" as="image" href="assets/casa-fara-omuleti.webp" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=15">
 
     <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -848,8 +848,8 @@
             </p>
 
             <div class="tickets-grid">
-                <article class="ticket-card ticket-card-feature">
-                    <div class="ticket-ribbon" aria-label="Recommended">Recommended</div>
+                <article class="ticket-card ticket-card-soldout">
+                    <div class="ticket-ribbon ticket-ribbon-soldout" aria-label="Sold out">Sold Out</div>
                     <div class="ticket-tag ticket-tag-muted">Require Approval</div>
                     <h3 class="ticket-name">Full Pass <span class="ticket-name-meta">(Day 1 &amp; 2)</span></h3>
                     <p class="ticket-desc">
@@ -865,11 +865,12 @@
                         <span class="price-vat-note">ex. VAT</span>
                     </div>
                     <p class="price-with-vat">€ 189 incl. VAT</p>
-                    <p class="ticket-stock">50 available spots</p>
-                    <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener" class="btn btn-outline btn-block">Apply for Full Pass</a>
+                    <p class="ticket-stock">Sold out</p>
+                    <button type="button" class="btn btn-soldout btn-block" disabled aria-disabled="true">Sold Out</button>
                 </article>
 
-                <article class="ticket-card">
+                <article class="ticket-card ticket-card-soldout">
+                    <div class="ticket-ribbon ticket-ribbon-soldout" aria-label="Sold out">Sold Out</div>
                     <div class="ticket-tag ticket-tag-muted">Require Approval</div>
                     <h3 class="ticket-name">Day 2 Pass</h3>
                     <p class="ticket-desc">
@@ -884,11 +885,12 @@
                         <span class="price-vat-note">ex. VAT</span>
                     </div>
                     <p class="price-with-vat">€ 119 incl. VAT</p>
-                    <p class="ticket-stock">50 available spots</p>
-                    <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener" class="btn btn-outline btn-block">Apply for Day 2</a>
+                    <p class="ticket-stock">Sold out</p>
+                    <button type="button" class="btn btn-soldout btn-block" disabled aria-disabled="true">Sold Out</button>
                 </article>
 
-                <article class="ticket-card">
+                <article class="ticket-card ticket-card-soldout">
+                    <div class="ticket-ribbon ticket-ribbon-soldout" aria-label="Sold out">Sold Out</div>
                     <div class="ticket-tag ticket-tag-muted">Require Approval</div>
                     <h3 class="ticket-name">Day 1 Pass</h3>
                     <p class="ticket-desc">
@@ -903,11 +905,12 @@
                         <span class="price-vat-note">ex. VAT</span>
                     </div>
                     <p class="price-with-vat">€ 89 incl. VAT</p>
-                    <p class="ticket-stock">Limited spots</p>
-                    <a href="https://luma.com/uj9v0i78" target="_blank" rel="noopener" class="btn btn-outline btn-block">Apply for Day 1</a>
+                    <p class="ticket-stock">Sold out</p>
+                    <button type="button" class="btn btn-soldout btn-block" disabled aria-disabled="true">Sold Out</button>
                 </article>
 
-                <article class="ticket-card">
+                <article class="ticket-card ticket-card-available">
+                    <div class="ticket-ribbon ticket-ribbon-available" aria-label="Available">Available</div>
                     <div class="ticket-tag ticket-tag-muted">Require Approval</div>
                     <h3 class="ticket-name">Evening Mixer <span class="ticket-name-meta">(Day 2)</span></h3>
                     <p class="ticket-desc">
@@ -1035,6 +1038,22 @@
         </div>
     </footer>
 
+    <!-- ▲ TICKET ALERT · auto-opens once per session (~1.5s). See script.js -->
+    <div class="modal" id="ticketAlert" aria-hidden="true">
+        <div class="modal-backdrop" data-alert-close></div>
+
+        <div class="modal-card modal-card--alert" role="dialog" aria-modal="true" aria-labelledby="ticketAlertTitle">
+            <button type="button" class="modal-close" aria-label="Close" data-alert-close>×</button>
+            <p class="eyebrow modal-eyebrow">Tickets</p>
+            <h3 class="modal-title" id="ticketAlertTitle">Almost <span class="text-glow">sold out</span></h3>
+            <p class="modal-lead">
+                Full Pass, Day 1 and Day 2 passes are sold out. Only the
+                <strong>Day 2 Evening Mixer</strong> is still available.
+            </p>
+            <a href="#tickets" class="btn btn-primary btn-block" data-alert-cta>See the Evening Mixer ticket</a>
+        </div>
+    </div>
+
     <!-- ▲ PARTNER MODAL · made with ❤️ by ZUP! → contact@zup.digital -->
     <div class="modal" id="partnerModal" aria-hidden="true">
         <div class="modal-backdrop" data-partner-close></div>
@@ -1134,6 +1153,6 @@
     </script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>
