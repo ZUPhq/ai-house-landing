@@ -1222,6 +1222,96 @@ ul {
 }
 
 /* =========================================================
+   HERO COUNTDOWN — ENDED STATE (variant B)
+   Once the target passes, the frozen 00 numbers stay as a
+   blurred, dimmed backdrop while a crisp "Event ended"
+   message sits on top. Toggled by the `.is-ended` class
+   (hardcoded in markup + re-applied by script.js at expiry).
+   ========================================================= */
+.hero-countdown.is-ended {
+    display: grid;
+    justify-items: start;
+}
+
+/* Drop the live "doors open in" label + pulsing dot once ended */
+.hero-countdown.is-ended .hero-countdown-label {
+    display: none;
+}
+
+/* Stack frozen units + message in the same grid cell so the block
+   sizes to the taller of the two and never overlaps its neighbours */
+.hero-countdown.is-ended .hero-countdown-units,
+.hero-countdown.is-ended .hero-countdown-ended {
+    grid-area: 1 / 1;
+}
+
+/* Frozen numbers become a soft backdrop */
+.hero-countdown.is-ended .hero-countdown-units {
+    filter: blur(7px);
+    opacity: 0.3;
+    pointer-events: none;
+    user-select: none;
+    width: 100%;
+}
+
+/* Crisp message on top — hidden until .is-ended */
+.hero-countdown-ended {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    align-self: center;
+}
+
+.hero-countdown.is-ended .hero-countdown-ended {
+    display: flex;
+}
+
+.hero-countdown-ended-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+.hero-countdown-ended-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-soldout);
+    box-shadow: 0 0 10px rgba(229, 72, 77, 0.7);
+    flex-shrink: 0;
+}
+
+.hero-countdown-ended-title {
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(28px, 4.4vw, 44px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+
+.hero-countdown-ended-sub {
+    margin: 12px 0 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* =========================================================
    ABOUT
    ========================================================= */
 .about-section {

@@ -73,6 +73,8 @@
 
         function pad(n) { return n < 10 ? "0" + n : "" + n; }
 
+        var countdownInterval = null;
+
         function tick() {
             var now = Date.now();
             var diff = target - now;
@@ -81,6 +83,10 @@
                 hoursEl.textContent = "00";
                 minutesEl.textContent = "00";
                 secondsEl.textContent = "00";
+                // Event is over — switch to the "Event ended" state (blurred
+                // frozen numbers + message) and stop ticking.
+                timerEl.classList.add("is-ended");
+                if (countdownInterval) { clearInterval(countdownInterval); }
                 return;
             }
             var d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -94,7 +100,7 @@
         }
 
         tick();
-        setInterval(tick, 1000);
+        countdownInterval = setInterval(tick, 1000);
     }
 
     // ---------- MOBILE NAV TOGGLE ----------
@@ -706,75 +712,5 @@
         }
     }
 
-
-    // ---------- TICKET ALERT ----------
-    // Centered pop-up: only the Day 2 Evening Mixer remains available.
-    // Auto-opens ~1.5s after load, once per browser session (suppressed
-    // afterwards via sessionStorage). Closes on ×, ESC, backdrop, or the
-    // CTA — which then smooth-scrolls to the tickets section.
-    var ticketAlert = document.getElementById("ticketAlert");
-    if (ticketAlert) {
-        var ALERT_KEY = "aihouse:ticket-alert-dismissed";
-        var alertCloseTriggers = ticketAlert.querySelectorAll("[data-alert-close]");
-        var alertCta = ticketAlert.querySelector("[data-alert-cta]");
-        var alertLastFocus = null;
-
-        function alertDismissed() {
-            try { return sessionStorage.getItem(ALERT_KEY) === "1"; }
-            catch (e) { return false; }
-        }
-
-        function markAlertDismissed() {
-            try { sessionStorage.setItem(ALERT_KEY, "1"); } catch (e) {}
-        }
-
-        function openAlert() {
-            if (ticketAlert.classList.contains("is-open")) return;
-            alertLastFocus = document.activeElement;
-            ticketAlert.classList.add("is-open");
-            ticketAlert.setAttribute("aria-hidden", "false");
-            document.documentElement.classList.add("modal-open");
-            if (alertCta && typeof alertCta.focus === "function") {
-                setTimeout(function () { alertCta.focus(); }, 50);
-            }
-        }
-
-        function closeAlert() {
-            ticketAlert.classList.remove("is-open");
-            ticketAlert.setAttribute("aria-hidden", "true");
-            document.documentElement.classList.remove("modal-open");
-            markAlertDismissed();
-            if (alertLastFocus && typeof alertLastFocus.focus === "function") {
-                alertLastFocus.focus();
-            }
-        }
-
-        for (var a = 0; a < alertCloseTriggers.length; a++) {
-            alertCloseTriggers[a].addEventListener("click", closeAlert);
-        }
-
-        document.addEventListener("keydown", function (e) {
-            if (e.key === "Escape" && ticketAlert.classList.contains("is-open")) {
-                closeAlert();
-            }
-        });
-
-        if (alertCta) {
-            alertCta.addEventListener("click", function (e) {
-                e.preventDefault();
-                closeAlert();
-                // Use the SAME native fragment navigation the nav links use — it
-                // honors scroll-padding-top:90px + scroll-behavior:smooth and is
-                // proven to land correctly on this page. Defer to the next task so
-                // the modal scroll-lock (overflow:hidden on <html>) is released and
-                // layout has settled before the browser performs the jump.
-                setTimeout(function () { window.location.hash = "#partners"; }, 50);
-            });
-        }
-
-        if (!alertDismissed()) {
-            setTimeout(openAlert, 1500);
-        }
-    }
 
 })();
